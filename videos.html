@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Video Tutorials — P1 Math Ace</title>
+  <meta name="description" content="Curated YouTube video tutorials and playlists for Cambridge AS Level Pure Mathematics 1 (9709), organised by topic.">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <link rel="stylesheet" href="css/styles.css">
+  <script defer src="js/main.js"></script>
+  <style>
+    /* ── TOPIC FILTER ── */
+    .topic-filter { display:flex; gap:4px; flex-wrap:wrap; margin-bottom:28px; }
+    .topic-filter .tab { padding:8px 16px; border-radius:20px; border:1px solid var(--border); font-size:12.5px; }
+    .topic-filter .tab.active { background:var(--accent-blue); color:#fff; border-color:var(--accent-blue); }
+
+    /* ── SECTIONS ── */
+    .video-section { margin-bottom:40px; }
+    .video-section h2 { font-size:18px; font-weight:600; margin-bottom:16px; display:flex; align-items:center; gap:10px; }
+    .video-section h2 .topic-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+
+    /* ── VIDEO CARDS ── */
+    .video-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:16px; }
+    .vid-card { background:var(--bg-secondary); border:1px solid var(--border); border-radius:var(--radius-md); overflow:hidden; transition:var(--transition); cursor:pointer; }
+    .vid-card:hover { border-color:var(--border-light); transform:translateY(-3px); box-shadow:0 8px 30px rgba(0,0,0,0.35); }
+    .vid-card__thumb { position:relative; padding-top:56.25%; background:var(--bg-tertiary); overflow:hidden; }
+    .vid-card__thumb img { position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; transition:transform 0.3s ease; }
+    .vid-card:hover .vid-card__thumb img { transform:scale(1.05); }
+    .vid-card__play { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:56px; height:56px; background:rgba(255,0,0,0.88); border-radius:50%; display:flex; align-items:center; justify-content:center; transition:all 0.25s ease; box-shadow:0 4px 20px rgba(255,0,0,0.3); }
+    .vid-card:hover .vid-card__play { background:#ff0000; transform:translate(-50%,-50%) scale(1.12); }
+    .vid-card__play svg { width:22px; height:22px; fill:#fff; margin-left:3px; }
+    .vid-card__duration { position:absolute; bottom:8px; right:8px; background:rgba(0,0,0,0.8); color:#fff; font-size:10.5px; font-weight:600; padding:2px 6px; border-radius:3px; font-family:var(--font-mono); }
+    .vid-card__info { padding:12px 14px; }
+    .vid-card__title { font-size:14px; font-weight:600; margin-bottom:4px; line-height:1.4; }
+    .vid-card__channel { font-size:12px; color:var(--text-muted); }
+
+    /* ── MODAL / POPUP PLAYER ── */
+    .video-modal { position:fixed; inset:0; z-index:9999; display:none; align-items:center; justify-content:center; }
+    .video-modal.open { display:flex; }
+    .video-modal__backdrop { position:absolute; inset:0; background:rgba(0,0,0,0.85); backdrop-filter:blur(8px); animation:modalFadeIn 0.2s ease; }
+    .video-modal__container { position:relative; width:90vw; max-width:960px; z-index:1; animation:modalSlideUp 0.3s ease; }
+    .video-modal__container.fullscreen { max-width:100vw; width:98vw; }
+    .video-modal__header { display:flex; align-items:center; justify-content:space-between; padding:10px 0; }
+    .video-modal__title { font-size:15px; font-weight:600; color:#fff; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; flex:1; margin-right:16px; }
+    .video-modal__channel { font-size:12px; color:var(--accent-blue); margin-top:2px; }
+    .video-modal__actions { display:flex; gap:6px; }
+    .modal-btn { width:36px; height:36px; border-radius:8px; border:1px solid rgba(255,255,255,0.15); background:rgba(255,255,255,0.06); color:#fff; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:all 0.2s ease; }
+    .modal-btn:hover { background:rgba(255,255,255,0.15); border-color:rgba(255,255,255,0.3); }
+    .modal-btn svg { width:18px; height:18px; }
+    .video-modal__player { position:relative; padding-top:56.25%; border-radius:var(--radius-md); overflow:hidden; background:#000; box-shadow:0 20px 60px rgba(0,0,0,0.5); }
+    .video-modal__player iframe { position:absolute; top:0; left:0; width:100%; height:100%; border:none; }
+    .video-modal__tip { text-align:center; padding:10px 0 0; font-size:11.5px; color:rgba(255,255,255,0.4); }
+    .video-modal__tip kbd { background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.15); border-radius:3px; padding:1px 5px; font-family:var(--font-mono); font-size:10px; }
+
+    @keyframes modalFadeIn { from { opacity:0; } to { opacity:1; } }
+    @keyframes modalSlideUp { from { opacity:0; transform:translateY(30px) scale(0.95); } to { opacity:1; transform:translateY(0) scale(1); } }
+
+    /* ── PLAYLISTS ── */
+    .playlist-section { margin-bottom:40px; }
+    .playlist-section h2 { font-size:18px; font-weight:600; margin-bottom:16px; }
+    .playlist-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:16px; }
+    .playlist-card { background:var(--bg-secondary); border:1px solid var(--border); border-radius:var(--radius-md); padding:20px; text-decoration:none; color:inherit; transition:var(--transition); display:flex; flex-direction:column; gap:8px; }
+    .playlist-card:hover { border-color:var(--accent-blue-dim); transform:translateY(-2px); }
+    .playlist-card__title { font-size:15px; font-weight:600; }
+    .playlist-card__channel { font-size:12px; color:var(--accent-blue); }
+    .playlist-card__desc { font-size:12.5px; color:var(--text-muted); line-height:1.5; }
+    .playlist-card__meta { font-size:11px; color:var(--text-muted); display:flex; gap:12px; margin-top:auto; }
+
+    /* ── CHANNELS ── */
+    .channel-strip { display:flex; gap:12px; flex-wrap:wrap; margin-bottom:32px; }
+    .channel-chip { display:flex; align-items:center; gap:8px; padding:8px 16px; background:var(--bg-secondary); border:1px solid var(--border); border-radius:20px; text-decoration:none; color:var(--text-secondary); font-size:13px; font-weight:500; transition:var(--transition); }
+    .channel-chip:hover { border-color:var(--accent-blue-dim); color:var(--accent-blue); }
+    .channel-chip__dot { width:24px; height:24px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:700; color:#fff; }
+  </style>
+</head>
+<body>
+<div class="page-wrapper">
+  <div class="container">
+    <div class="page-header">
+      <h1>Video Tutorials</h1>
+      <p>Curated YouTube tutorials &amp; playlists for every P1 topic — click to watch</p>
+    </div>
+
+    <!-- RECOMMENDED CHANNELS -->
+    <h2 style="font-size:16px; font-weight:600; margin-bottom:12px; color:var(--text-muted);">Recommended Channels</h2>
+    <div class="channel-strip fade-in-up">
+      <a href="https://www.youtube.com/@ExamSolutions" target="_blank" rel="noopener" class="channel-chip">
+        <div class="channel-chip__dot" style="background:#e53935">E</div> ExamSolutions
+      </a>
+      <a href="https://www.youtube.com/@MindmathsOfficial" target="_blank" rel="noopener" class="channel-chip">
+        <div class="channel-chip__dot" style="background:var(--accent-blue)">M</div> Mindmaths
+      </a>
+      <a href="https://www.youtube.com/@OrganicChemistryTutor" target="_blank" rel="noopener" class="channel-chip">
+        <div class="channel-chip__dot" style="background:var(--accent-green)">O</div> Organic Chemistry Tutor
+      </a>
+      <a href="https://www.youtube.com/@3blue1brown" target="_blank" rel="noopener" class="channel-chip">
+        <div class="channel-chip__dot" style="background:var(--accent-cyan)">3</div> 3Blue1Brown
+      </a>
+      <a href="https://www.youtube.com/@tecmath" target="_blank" rel="noopener" class="channel-chip">
+        <div class="channel-chip__dot" style="background:var(--accent-amber)">T</div> tecmath
+      </a>
+      <a href="https://www.youtube.com/@MyMathsCloud" target="_blank" rel="noopener" class="channel-chip">
+        <div class="channel-chip__dot" style="background:var(--accent-pink)">M</div> MyMathsCloud
+      </a>
+    </div>
+
+    <!-- TOPIC FILTER -->
+    <div class="topic-filter">
+      <button class="tab active" onclick="filterVideos('all', this)">All Topics</button>
+      <button class="tab" onclick="filterVideos('quadratics', this)">Quadratics</button>
+      <button class="tab" onclick="filterVideos('functions', this)">Functions</button>
+      <button class="tab" onclick="filterVideos('coord', this)">Coord. Geom</button>
+      <button class="tab" onclick="filterVideos('circular', this)">Circular Measure</button>
+      <button class="tab" onclick="filterVideos('trig', this)">Trigonometry</button>
+      <button class="tab" onclick="filterVideos('series', this)">Series</button>
+      <button class="tab" onclick="filterVideos('diff', this)">Differentiation</button>
+      <button class="tab" onclick="filterVideos('integ', this)">Integration</button>
+    </div>
+
+    <!-- VIDEO SECTIONS (rendered by JS) -->
+    <div id="videoSections"></div>
+
+    <!-- FULL COURSE PLAYLISTS -->
+    <div class="playlist-section">
+      <h2 style="font-size:18px; font-weight:600; margin-bottom:16px;">Full Course Playlists</h2>
+      <div class="playlist-grid stagger">
+        <a href="https://www.youtube.com/playlist?list=PLJtmxEh71Mxv9CFxzCY1QKDF4iGUCRm96" target="_blank" rel="noopener" class="playlist-card">
+          <div class="playlist-card__title">CIE 9709 Pure Maths 1 — Full Course</div>
+          <div class="playlist-card__channel">ExamSolutions</div>
+          <div class="playlist-card__desc">Complete worked solutions and explanations for all P1 topics.</div>
+          <div class="playlist-card__meta"><span>50+ videos</span><span>Full syllabus</span></div>
+        </a>
+        <a href="https://www.youtube.com/playlist?list=PLqL14ZxTTA4cBnpN7Hid0rmZ01KQAOQIL" target="_blank" rel="noopener" class="playlist-card">
+          <div class="playlist-card__title">AS Level Mathematics — Pure 1</div>
+          <div class="playlist-card__channel">Mindmaths</div>
+          <div class="playlist-card__desc">Topic-by-topic tutorial series for Cambridge P1.</div>
+          <div class="playlist-card__meta"><span>40+ videos</span><span>Beginner friendly</span></div>
+        </a>
+        <a href="https://www.youtube.com/playlist?list=PLW0gavSzhMlTyWKCgPEMDwiN_High8fBi" target="_blank" rel="noopener" class="playlist-card">
+          <div class="playlist-card__title">Essence of Calculus</div>
+          <div class="playlist-card__channel">3Blue1Brown</div>
+          <div class="playlist-card__desc">Beautiful visual explanations of differentiation &amp; integration concepts.</div>
+          <div class="playlist-card__meta"><span>12 videos</span><span>Conceptual depth</span></div>
+        </a>
+        <a href="https://www.youtube.com/playlist?list=PLybg94GvOJ9FoGQKUuFTxch-K1bZSTWqE" target="_blank" rel="noopener" class="playlist-card">
+          <div class="playlist-card__title">CIE P1 Past Paper Walkthroughs</div>
+          <div class="playlist-card__channel">MyMathsCloud</div>
+          <div class="playlist-card__desc">Complete past paper solutions walked through step by step.</div>
+          <div class="playlist-card__meta"><span>30+ papers</span><span>Exam practice</span></div>
+        </a>
+        <a href="https://www.youtube.com/playlist?list=PLDesaqWTN6ESsmwELDrO7ng3pflb3HRv5" target="_blank" rel="noopener" class="playlist-card">
+          <div class="playlist-card__title">Trigonometry — Full Course</div>
+          <div class="playlist-card__channel">Organic Chemistry Tutor</div>
+          <div class="playlist-card__desc">Everything trig: identities, equations, graphs, unit circle.</div>
+          <div class="playlist-card__meta"><span>25+ videos</span><span>Comprehensive</span></div>
+        </a>
+        <a href="https://www.youtube.com/playlist?list=PLMiyQ6EW11_lJT2YKm7kz_BqMBXFMXk9E" target="_blank" rel="noopener" class="playlist-card">
+          <div class="playlist-card__title">Sequences &amp; Series</div>
+          <div class="playlist-card__channel">ExamSolutions</div>
+          <div class="playlist-card__desc">AP, GP, binomial expansion, sum to infinity.</div>
+          <div class="playlist-card__meta"><span>15+ videos</span><span>Topic focus</span></div>
+        </a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══ MODAL VIDEO PLAYER ═══ -->
+<div class="video-modal" id="videoModal">
+  <div class="video-modal__backdrop" onclick="closeModal()"></div>
+  <div class="video-modal__container" id="modalContainer">
+    <div class="video-modal__header">
+      <div>
+        <div class="video-modal__title" id="modalTitle"></div>
+        <div class="video-modal__channel" id="modalChannel"></div>
+      </div>
+      <div class="video-modal__actions">
+        <button class="modal-btn" id="fullscreenBtn" onclick="toggleFullscreen()" title="Toggle fullscreen (F)">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3"/><path d="M21 8V5a2 2 0 0 0-2-2h-3"/><path d="M3 16v3a2 2 0 0 0 2 2h3"/><path d="M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
+        </button>
+        <button class="modal-btn" onclick="openInYouTube()" title="Open in YouTube">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
+        </button>
+        <button class="modal-btn" onclick="closeModal()" title="Close (Esc)" style="background:rgba(239,68,68,0.15); border-color:rgba(239,68,68,0.3);">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="video-modal__player" id="modalPlayer"></div>
+    <div class="video-modal__tip"><kbd>Esc</kbd> Close &nbsp;&bull;&nbsp; <kbd>F</kbd> Fullscreen &nbsp;&bull;&nbsp; <kbd>Click Outside</kbd> to Close</div>
+  </div>
+</div>
+
+<script>
+(function() {
+  'use strict';
+
+  /* ═══════════════════════════════
+     VIDEO DATABASE
+  ═══════════════════════════════ */
+  const VIDEOS = [
+    // QUADRATICS
+    { id:'i7idZfS8t8w', topic:'quadratics', title:'Completing the Square — Full Method', channel:'ExamSolutions', dur:'14:23' },
+    { id:'2ZzuZvz33b0', topic:'quadratics', title:'The Discriminant — When to Use It', channel:'Organic Chemistry Tutor', dur:'12:06' },
+    { id:'FY1yrEVfKGE', topic:'quadratics', title:'Solving Quadratic Inequalities', channel:'tecmath', dur:'8:44' },
+    { id:'IexAMaJLjrk', topic:'quadratics', title:'Quadratic Formula — Clear Explanation', channel:'Organic Chemistry Tutor', dur:'19:02' },
+
+    // FUNCTIONS
+    { id:'kvGsIo1TmsM', topic:'functions', title:'Inverse Functions — Step by Step', channel:'Organic Chemistry Tutor', dur:'20:15' },
+    { id:'nUQo0MP_ln0', topic:'functions', title:'Composite Functions fg(x)', channel:'ExamSolutions', dur:'11:32' },
+    { id:'52tpYl2tTqk', topic:'functions', title:'Graph Transformations — All Types', channel:'MyMathsCloud', dur:'16:48' },
+    { id:'VYdnPgqRAWc', topic:'functions', title:'Modulus Function / Absolute Value', channel:'ExamSolutions', dur:'13:37' },
+
+    // COORDINATE GEOMETRY
+    { id:'2GqL7e5CJHE', topic:'coord', title:'Equation of a Circle — Complete Guide', channel:'ExamSolutions', dur:'18:42' },
+    { id:'8Ft6PnkftBM', topic:'coord', title:'Straight Lines & Gradients', channel:'Organic Chemistry Tutor', dur:'16:55' },
+    { id:'So7P5fOYajM', topic:'coord', title:'Perpendicular Bisectors & Tangents to Circles', channel:'ExamSolutions', dur:'14:10' },
+
+    // CIRCULAR MEASURE
+    { id:'cgPYLJ-s5II', topic:'circular', title:'Radians — What Are They Really?', channel:'3Blue1Brown', dur:'9:15' },
+    { id:'_7Y5GCmJhIc', topic:'circular', title:'Arc Length & Sector Area', channel:'ExamSolutions', dur:'12:18' },
+    { id:'eTDaJ4ebR28', topic:'circular', title:'Segment Area & Perimeter Problems', channel:'ExamSolutions', dur:'15:22' },
+
+    // TRIGONOMETRY
+    { id:'snHKEpCv0Hk', topic:'trig', title:'Trig Identities You Must Know', channel:'Organic Chemistry Tutor', dur:'22:07' },
+    { id:'P9dpTTpjymE', topic:'trig', title:'Solving Trigonometric Equations (CAST)', channel:'ExamSolutions', dur:'17:33' },
+    { id:'bH-U9ePKIss', topic:'trig', title:'R-Formula: a sin x + b cos x', channel:'MyMathsCloud', dur:'14:45' },
+    { id:'yBw67Fb31Cs', topic:'trig', title:'Trig Graphs: Sin, Cos, Tan', channel:'Organic Chemistry Tutor', dur:'18:12' },
+
+    // SERIES
+    { id:'OK2WNMDV2eI', topic:'series', title:'Binomial Expansion — Full Guide', channel:'Organic Chemistry Tutor', dur:'23:17' },
+    { id:'Uy_8BFGgS3Q', topic:'series', title:'Arithmetic & Geometric Progressions', channel:'ExamSolutions', dur:'19:44' },
+    { id:'folS07Og7WA', topic:'series', title:'GP Sum to Infinity Explained', channel:'ExamSolutions', dur:'10:28' },
+
+    // DIFFERENTIATION
+    { id:'WUvTyaaNkzM', topic:'diff', title:'The Essence of Calculus', channel:'3Blue1Brown', dur:'17:04' },
+    { id:'S0_qX4VJhMQ', topic:'diff', title:'Chain Rule — Step by Step', channel:'Organic Chemistry Tutor', dur:'25:11' },
+    { id:'pHMzNW8Agq4', topic:'diff', title:'Stationary Points & Nature', channel:'ExamSolutions', dur:'13:52' },
+    { id:'ANyVpMS3HL4', topic:'diff', title:'Connected Rates of Change', channel:'ExamSolutions', dur:'16:30' },
+
+    // INTEGRATION
+    { id:'rfG8ce4nNh0', topic:'integ', title:'Integration — The Big Picture', channel:'3Blue1Brown', dur:'20:46' },
+    { id:'o75AqTInKDU', topic:'integ', title:'Area Under a Curve & Between Curves', channel:'Organic Chemistry Tutor', dur:'28:14' },
+    { id:'H9eCT6f_Ftc', topic:'integ', title:'Volume of Revolution', channel:'ExamSolutions', dur:'15:38' },
+    { id:'UcNkwLfcGRQ', topic:'integ', title:'Trapezium Rule Made Easy', channel:'ExamSolutions', dur:'11:55' },
+  ];
+
+  const TOPICS = [
+    { key:'quadratics', name:'Quadratics',          color:'var(--accent-blue)' },
+    { key:'functions',  name:'Functions',            color:'var(--accent-cyan)' },
+    { key:'coord',      name:'Coordinate Geometry',  color:'var(--accent-green)' },
+    { key:'circular',   name:'Circular Measure',     color:'var(--accent-amber)' },
+    { key:'trig',       name:'Trigonometry',          color:'var(--accent-red)' },
+    { key:'series',     name:'Series',                color:'var(--accent-pink)' },
+    { key:'diff',       name:'Differentiation',       color:'var(--accent-teal)' },
+    { key:'integ',      name:'Integration',           color:'var(--accent-amber)' },
+  ];
+
+  let currentVideoId = null;
+  let isFullscreen = false;
+
+  /* ═══ RENDER VIDEO SECTIONS ═══ */
+  function renderSections() {
+    const container = document.getElementById('videoSections');
+    container.innerHTML = TOPICS.map(topic => {
+      const vids = VIDEOS.filter(v => v.topic === topic.key);
+      return `
+        <div class="video-section" data-topic="${topic.key}">
+          <h2><span class="topic-dot" style="background:${topic.color}"></span> ${topic.name}</h2>
+          <div class="video-grid">
+            ${vids.map(v => `
+              <div class="vid-card" onclick="openModal('${v.id}','${escapeAttr(v.title)}','${escapeAttr(v.channel)}')">
+                <div class="vid-card__thumb">
+                  <img src="https://img.youtube.com/vi/${v.id}/hqdefault.jpg" alt="${escapeAttr(v.title)}" loading="lazy">
+                  <div class="vid-card__play"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+                  <div class="vid-card__duration">${v.dur}</div>
+                </div>
+                <div class="vid-card__info">
+                  <div class="vid-card__title">${v.title}</div>
+                  <div class="vid-card__channel">${v.channel}</div>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  function escapeAttr(str) {
+    if (!str) return '';
+    return str
+      .replace(/&/g, '&amp;')
+      .replace(/'/g, "\\'")
+      .replace(/"/g, '&quot;');
+  }
+
+  /* ═══ TOPIC FILTER ═══ */
+  window.filterVideos = function(topic, btn) {
+    document.querySelectorAll('.topic-filter .tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.video-section').forEach(s => {
+      s.style.display = (topic === 'all' || s.dataset.topic === topic) ? '' : 'none';
+    });
+  };
+
+  /* ═══ MODAL CONTROLS ═══ */
+  window.openModal = function(videoId, title, channel) {
+    currentVideoId = videoId;
+    isFullscreen = false;
+
+    document.getElementById('modalTitle').textContent = title;
+    document.getElementById('modalChannel').textContent = channel;
+    document.getElementById('modalContainer').classList.remove('fullscreen');
+    const iframe = document.createElement('iframe');
+    const origin = window.location.origin;
+    
+    // Configured based on user-provided working example
+    iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&enablejsapi=1&origin=${origin}`;
+    iframe.title = title;
+    iframe.frameBorder = "0";
+    iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+    iframe.referrerPolicy = "strict-origin-when-cross-origin";
+    iframe.allowFullscreen = true;
+    
+    const playerContainer = document.getElementById('modalPlayer');
+    playerContainer.innerHTML = '';
+    playerContainer.appendChild(iframe);
+
+    document.getElementById('videoModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  };
+
+  window.closeModal = function() {
+    document.getElementById('videoModal').classList.remove('open');
+    document.getElementById('modalPlayer').innerHTML = '';
+    document.body.style.overflow = '';
+    currentVideoId = null;
+  };
+
+  window.toggleFullscreen = function() {
+    isFullscreen = !isFullscreen;
+    document.getElementById('modalContainer').classList.toggle('fullscreen', isFullscreen);
+  };
+
+  window.openInYouTube = function() {
+    if (currentVideoId) {
+      window.open(`https://www.youtube.com/watch?v=${currentVideoId}`, '_blank');
+    }
+  };
+
+  /* ═══ KEYBOARD SHORTCUTS ═══ */
+  document.addEventListener('keydown', (e) => {
+    if (!document.getElementById('videoModal').classList.contains('open')) return;
+
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      closeModal();
+    } else if (e.key === 'f' || e.key === 'F') {
+      // Don't capture F if user is typing in an input
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+      e.preventDefault();
+      toggleFullscreen();
+    }
+  });
+
+  /* ═══ INIT ═══ */
+  document.addEventListener('DOMContentLoaded', renderSections);
+})();
+</script>
+</body>
+</html>

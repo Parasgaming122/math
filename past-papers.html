@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Past Papers — P1 Math Ace</title>
+  <meta name="description" content="Cambridge 9709 Pure Mathematics 1 past papers 2015-2025 with mark schemes, examiner reports and topical questions.">
+  <link rel="stylesheet" href="css/styles.css">
+  <script defer src="js/main.js"></script>
+  <style>
+    .filter-bar { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:24px; }
+    .filter-bar select { padding:8px 12px; border-radius:var(--radius-sm); border:1px solid var(--border); background:var(--bg-secondary); color:var(--text-primary); font-size:13px; outline:none; }
+    .filter-bar select:focus { border-color:var(--accent-blue-dim); }
+    .paper-section { margin-bottom:32px; }
+    .paper-section h2 { font-size:18px; font-weight:600; margin-bottom:14px; display:flex; align-items:center; gap:8px; }
+    .paper-section h2 .year-badge { background:rgba(74,158,255,0.1); color:var(--accent-blue); font-size:12px; font-weight:600; padding:3px 10px; border-radius:12px; }
+    .paper-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:12px; }
+    .paper-card { background:var(--bg-secondary); border:1px solid var(--border); border-radius:var(--radius-sm); padding:16px; }
+    .paper-card__session { font-size:13px; font-weight:600; color:var(--text-primary); margin-bottom:8px; }
+    .paper-card__links { display:flex; gap:8px; flex-wrap:wrap; }
+    .paper-card__link { display:inline-flex; align-items:center; gap:4px; padding:5px 12px; background:rgba(74,158,255,0.07); border:1px solid rgba(74,158,255,0.15); border-radius:4px; font-size:12px; color:var(--accent-blue); transition:var(--transition); cursor:pointer; text-decoration:none; }
+    .paper-card__link:hover { background:rgba(74,158,255,0.15); color:#6db5ff; }
+    .paper-card__link svg { width:12px; height:12px; }
+    .ms-link { background:rgba(74,222,128,0.07); border-color:rgba(74,222,128,0.15); color:var(--accent-green); }
+    .ms-link:hover { background:rgba(74,222,128,0.15); color:#6ee8a0; }
+    .er-link { background:rgba(245,158,11,0.07); border-color:rgba(245,158,11,0.15); color:var(--accent-amber); }
+    .er-link:hover { background:rgba(245,158,11,0.15); color:#fdb44b; }
+
+    .guide-card { background:var(--bg-secondary); border:1px solid var(--border); border-radius:var(--radius-md); padding:24px; margin-bottom:32px; }
+    .guide-card h2 { font-size:18px; font-weight:600; margin-bottom:16px; }
+    .guide-card ol { padding-left:20px; color:var(--text-secondary); }
+    .guide-card ol li { margin-bottom:8px; line-height:1.6; }
+    .guide-card ol li strong { color:var(--text-primary); }
+
+    .ext-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:12px; margin-bottom:32px; }
+    .ext-card { background:var(--bg-secondary); border:1px solid var(--border); border-radius:var(--radius-sm); padding:18px; display:flex; flex-direction:column; gap:6px; text-decoration:none; color:inherit; transition:var(--transition); }
+    .ext-card:hover { border-color:var(--accent-blue-dim); transform:translateY(-2px); }
+    .ext-card__name { font-size:15px; font-weight:600; }
+    .ext-card__desc { font-size:12.5px; color:var(--text-muted); line-height:1.5; }
+
+    .topical-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:10px; }
+    .topical-card { background:var(--bg-secondary); border:1px solid var(--border); border-radius:var(--radius-sm); padding:14px; cursor:pointer; transition:var(--transition); }
+    .topical-card:hover { border-color:var(--accent-teal); }
+    .topical-card__topic { font-size:14px; font-weight:600; margin-bottom:4px; }
+    .topical-card__count { font-size:11px; color:var(--text-muted); }
+  </style>
+</head>
+<body>
+<div class="page-wrapper">
+  <div class="container">
+    <div class="page-header">
+      <h1>Past Papers Hub</h1>
+      <p>Cambridge 9709 Paper 1 — Question papers, mark schemes &amp; examiner reports</p>
+    </div>
+
+    <!-- HOW TO USE PAST PAPERS -->
+    <div class="guide-card fade-in-up">
+      <h2>How to Use Past Papers Effectively</h2>
+      <ol>
+        <li><strong>Start with topic papers</strong> — practice one topic at a time until you're confident.</li>
+        <li><strong>Time yourself</strong> — P1 is 75 minutes. Do full papers under timed conditions once you've covered all topics.</li>
+        <li><strong>Read the mark scheme carefully</strong> — understand HOW marks are awarded (M = method, A = accuracy, B = independent).</li>
+        <li><strong>Review examiner reports</strong> — they tell you common mistakes students made. Don't make them too!</li>
+        <li><strong>Redo questions you got wrong</strong> — don't just read the answer. Actually redo the working.</li>
+        <li><strong>Track weak areas</strong> — note which topics you lose marks on, then revise those specifically.</li>
+      </ol>
+    </div>
+
+    <!-- EXTERNAL SITES -->
+    <h2 style="font-size:18px; font-weight:600; margin-bottom:14px;">External Paper Archives</h2>
+    <div class="ext-grid fade-in-up">
+      <a href="https://papacambridge.com/caie-past-papers/a-level/mathematics-9709/" target="_blank" rel="noopener" class="ext-card">
+        <div class="ext-card__name">PapaCambridge</div>
+        <div class="ext-card__desc">Complete yearly &amp; topical archive. The most popular paper source.</div>
+      </a>
+      <a href="https://www.physicsandmathstutor.com/a-level-maths/cie/" target="_blank" rel="noopener" class="ext-card">
+        <div class="ext-card__name">Physics & Maths Tutor</div>
+        <div class="ext-card__desc">Well-organised papers with revision notes and worked solutions.</div>
+      </a>
+      <a href="https://www.savemyexams.com/as/maths/cie/pure-mathematics-1/" target="_blank" rel="noopener" class="ext-card">
+        <div class="ext-card__name">Save My Exams</div>
+        <div class="ext-card__desc">Topic questions with model answers, revision notes, and tips.</div>
+      </a>
+      <a href="https://gceguide.com/papers/A%20Levels/Mathematics%20(9709)/" target="_blank" rel="noopener" class="ext-card">
+        <div class="ext-card__name">GCE Guide</div>
+        <div class="ext-card__desc">Comprehensive archive with examiner reports for every session.</div>
+      </a>
+      <a href="https://www.cambridgeinternational.org/programmes-and-qualifications/cambridge-international-as-and-a-level-mathematics-9709/" target="_blank" rel="noopener" class="ext-card">
+        <div class="ext-card__name">CIE Official</div>
+        <div class="ext-card__desc">Official syllabus, specimen papers, and examiner guidance.</div>
+      </a>
+    </div>
+
+    <!-- TOPICAL PAPERS -->
+    <h2 style="font-size:18px; font-weight:600; margin-bottom:14px;">Browse by Topic</h2>
+    <div class="topical-grid fade-in-up" style="margin-bottom:32px;">
+      <a href="https://www.savemyexams.com/as/maths/cie/pure-mathematics-1/topic-questions/quadratics/" target="_blank" rel="noopener" class="topical-card">
+        <div class="topical-card__topic">Quadratics</div>
+        <div class="topical-card__count">Ch 1 — Completing square, discriminant, inequalities</div>
+      </a>
+      <a href="https://www.savemyexams.com/as/maths/cie/pure-mathematics-1/topic-questions/functions/" target="_blank" rel="noopener" class="topical-card">
+        <div class="topical-card__topic">Functions</div>
+        <div class="topical-card__count">Ch 2 — Composite, inverse, modulus, transformations</div>
+      </a>
+      <a href="https://www.savemyexams.com/as/maths/cie/pure-mathematics-1/topic-questions/coordinate-geometry/" target="_blank" rel="noopener" class="topical-card">
+        <div class="topical-card__topic">Coordinate Geometry</div>
+        <div class="topical-card__count">Ch 3 — Lines, circles, perpendicular bisectors</div>
+      </a>
+      <a href="https://www.savemyexams.com/as/maths/cie/pure-mathematics-1/topic-questions/circular-measure/" target="_blank" rel="noopener" class="topical-card">
+        <div class="topical-card__topic">Circular Measure</div>
+        <div class="topical-card__count">Ch 4 — Radians, arc length, sector/segment area</div>
+      </a>
+      <a href="https://www.savemyexams.com/as/maths/cie/pure-mathematics-1/topic-questions/trigonometry/" target="_blank" rel="noopener" class="topical-card">
+        <div class="topical-card__topic">Trigonometry</div>
+        <div class="topical-card__count">Ch 5 — Identities, equations, R-formula, graphs</div>
+      </a>
+      <a href="https://www.savemyexams.com/as/maths/cie/pure-mathematics-1/topic-questions/series/" target="_blank" rel="noopener" class="topical-card">
+        <div class="topical-card__topic">Series</div>
+        <div class="topical-card__count">Ch 6 — AP, GP, binomial expansion</div>
+      </a>
+      <a href="https://www.savemyexams.com/as/maths/cie/pure-mathematics-1/topic-questions/differentiation/" target="_blank" rel="noopener" class="topical-card">
+        <div class="topical-card__topic">Differentiation</div>
+        <div class="topical-card__count">Ch 7 — Rules, tangents, stationary points, rates</div>
+      </a>
+      <a href="https://www.savemyexams.com/as/maths/cie/pure-mathematics-1/topic-questions/integration/" target="_blank" rel="noopener" class="topical-card">
+        <div class="topical-card__topic">Integration</div>
+        <div class="topical-card__count">Ch 8 — Rules, area, volume, trapezium rule</div>
+      </a>
+    </div>
+
+    <!-- FILTER -->
+    <h2 style="font-size:18px; font-weight:600; margin-bottom:14px;">Papers by Year</h2>
+    <div class="filter-bar">
+      <select id="yearFilter" onchange="filterPapers()">
+        <option value="all">All Years</option>
+        <option value="2025">2025</option>
+        <option value="2024">2024</option>
+        <option value="2023">2023</option>
+        <option value="2022">2022</option>
+        <option value="2021">2021</option>
+        <option value="2020">2020</option>
+        <option value="2019">2019</option>
+        <option value="2018">2018</option>
+        <option value="2017">2017</option>
+        <option value="2016">2016</option>
+        <option value="2015">2015</option>
+      </select>
+    </div>
+
+    <!-- PAPER LISTINGS -->
+    <div id="paperListings"></div>
+
+    <!-- EXAM TIMETABLE INFO -->
+    <div class="guide-card fade-in-up" style="margin-top:32px;">
+      <h2>Exam Timetable Information</h2>
+      <p style="color:var(--text-secondary); line-height:1.7;">
+        <strong>Paper 1 (Pure Mathematics 1)</strong> is typically examined in:<br>
+        &bull; <strong>May/June</strong> session (main session for most candidates)<br>
+        &bull; <strong>October/November</strong> session<br>
+        &bull; <strong>February/March</strong> session (limited regions)<br><br>
+        Duration: <strong>1 hour 45 minutes (105 minutes)</strong><br>
+        Total marks: <strong>75 marks</strong><br>
+        Calculator: <strong>Scientific calculator allowed</strong> (not graphical)<br><br>
+        Check the official CIE timetable at <a href="https://www.cambridgeinternational.org/exam-administration/cambridge-exams-officers-guide/phase-1-preparation/timetabling-and-entries/" target="_blank" rel="noopener">cambridgeinternational.org</a> for exact dates.
+      </p>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  const BASE_URL = 'https://papers.gceguide.com/A%20Levels/Mathematics%20(9709)';
+
+  function generatePapers() {
+    const years = [];
+    for (let y = 2025; y >= 2015; y--) years.push(y);
+
+    const sessions = [
+      { code: 'm', label: 'February/March', variants: ['12','13'] },
+      { code: 's', label: 'May/June', variants: ['12','13'] },
+      { code: 'w', label: 'October/November', variants: ['12','13'] },
+    ];
+
+    return years.map(year => ({
+      year,
+      sessions: sessions.map(s => ({
+        label: s.label,
+        code: s.code,
+        qp: s.variants.map(v => ({
+          label: `P1 V${v.charAt(1)}`,
+          url: `${BASE_URL}/${year}/9709_${s.code}${String(year).slice(2)}_qp_${v}.pdf`
+        })),
+        ms: s.variants.map(v => ({
+          label: `MS V${v.charAt(1)}`,
+          url: `${BASE_URL}/${year}/9709_${s.code}${String(year).slice(2)}_ms_${v}.pdf`
+        })),
+        er: {
+          label: 'Examiner Report',
+          url: `${BASE_URL}/${year}/9709_${s.code}${String(year).slice(2)}_er.pdf`
+        }
+      }))
+    }));
+  }
+
+  function renderPapers(data) {
+    const container = document.getElementById('paperListings');
+    container.innerHTML = data.map(yearData => `
+      <div class="paper-section fade-in-up" data-year="${yearData.year}">
+        <h2><span class="year-badge">${yearData.year}</span></h2>
+        <div class="paper-grid">
+          ${yearData.sessions.map(s => `
+            <div class="paper-card">
+              <div class="paper-card__session">${s.label} ${yearData.year}</div>
+              <div class="paper-card__links">
+                ${s.qp.map(q => `<a href="${q.url}" target="_blank" rel="noopener" class="paper-card__link"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg> ${q.label}</a>`).join('')}
+                ${s.ms.map(m => `<a href="${m.url}" target="_blank" rel="noopener" class="paper-card__link ms-link"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> ${m.label}</a>`).join('')}
+                <a href="${s.er.url}" target="_blank" rel="noopener" class="paper-card__link er-link"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5"/><path d="M9 18h6"/></svg> ER</a>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `).join('');
+  }
+
+  window.filterPapers = function() {
+    const val = document.getElementById('yearFilter').value;
+    document.querySelectorAll('.paper-section').forEach(s => {
+      s.style.display = (val === 'all' || s.dataset.year === val) ? '' : 'none';
+    });
+  };
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const data = generatePapers();
+    renderPapers(data);
+  });
+</script>
+</body>
+</html>

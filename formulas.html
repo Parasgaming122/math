@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulas — P1 Math Ace</title>
+  <meta name="description" content="Complete AS Level Pure Mathematics 1 formula sheet with all 8 topics, worked examples, exam tips and common mistakes.">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script defer src="js/main.js"></script>
+</head>
+<body>
+<div class="page-wrapper">
+  <div class="container">
+
+    <!-- HEADER -->
+    <div class="page-header" style="display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:12px;">
+      <div>
+        <h1>Complete Formula &amp; Logic Reference</h1>
+        <p>All 8 Pure Mathematics 1 topics — tap any tab to jump</p>
+      </div>
+      <div style="display:flex; gap:8px;">
+        <button class="btn btn--ghost btn--sm" onclick="window.print()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect width="12" height="8" x="6" y="14"/></svg>
+          Print
+        </button>
+      </div>
+    </div>
+
+    <!-- SEARCH -->
+    <div class="search-bar">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      <input type="text" id="formulaSearch" placeholder="Search formulas... (e.g. quadratic, chain rule, sector)" autocomplete="off">
+    </div>
+
+    <!-- TABS -->
+    <div class="tabs" data-tab-group="formulas">
+      <button class="tab active" onclick="showTab('formulas',0)">Quadratics</button>
+      <button class="tab" onclick="showTab('formulas',1)">Functions</button>
+      <button class="tab" onclick="showTab('formulas',2)">Coord. Geometry</button>
+      <button class="tab" onclick="showTab('formulas',3)">Circular Measure</button>
+      <button class="tab" onclick="showTab('formulas',4)">Trigonometry</button>
+      <button class="tab" onclick="showTab('formulas',5)">Series</button>
+      <button class="tab" onclick="showTab('formulas',6)">Differentiation</button>
+      <button class="tab" onclick="showTab('formulas',7)">Integration</button>
+    </div>
+
+    <div data-panel-group="formulas">
+
+    <!-- ═══ 0 · QUADRATICS ═══ -->
+    <div class="panel active">
+    <div class="grid-auto">
+
+      <div class="card">
+        <h3>Forms of a Quadratic</h3>
+        <div class="formula"><span class="formula__label">Standard form</span><span class="formula__eq">$ax^2 + bx + c$</span></div>
+        <div class="formula formula--green"><span class="formula__label">Factored form</span><span class="formula__eq">$a(x - \alpha)(x - \beta)$</span></div>
+        <div class="formula formula--cyan"><span class="formula__label">Vertex / completed-square form</span><span class="formula__eq">$a(x + p)^2 + q$</span></div>
+        <p>Vertex is at $(-p, q)$. Minimum if $a > 0$, maximum if $a < 0$.</p>
+
+        <h4>Completing the Square</h4>
+        <div class="example">
+          <div class="example__title">Method</div>
+          <p class="step">$x^2 + bx + c \;\longrightarrow\; \left(x + \frac{b}{2}\right)^2 - \frac{b^2}{4} + c$</p>
+          <p>For $ax^2 + bx + c$: factor out $a$ first, then complete square inside the bracket.</p>
+        </div>
+        <div class="example">
+          <div class="example__title">Example: $2x^2 - 8x + 5$</div>
+          <p class="step">$= 2(x^2 - 4x) + 5$<br>
+          $= 2[(x-2)^2 - 4] + 5$<br>
+          $= 2(x-2)^2 - 8 + 5$<br>
+          $= 2(x-2)^2 - 3$</p>
+          <p>Vertex: $(2, -3)$. Since $a = 2 > 0$, this is a <strong>minimum</strong>.</p>
+        </div>
+        <div class="callout callout--danger"><strong>Common Mistake:</strong> Forgetting to multiply the constant back by $a$ after completing the square inside brackets. Always expand and simplify fully.</div>
+      </div>
+
+      <div class="card">
+        <h3>Quadratic Formula &amp; Discriminant</h3>
+        <div class="formula formula--red"><span class="formula__label">Quadratic formula (for $ax^2+bx+c=0$)</span><span class="formula__eq">$$x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$$</span></div>
+        <div class="formula formula--amber"><span class="formula__label">Discriminant $\Delta$</span><span class="formula__eq">$\Delta = b^2 - 4ac$</span></div>
+        <table>
+          <tr><th>$\Delta$</th><th>Roots</th></tr>
+          <tr><td>$> 0$</td><td>2 distinct real roots</td></tr>
+          <tr><td>$= 0$</td><td>1 repeated root (tangent)</td></tr>
+          <tr><td>$< 0$</td><td>No real roots</td></tr>
+        </table>
+        <div class="callout callout--rule"><strong>Key use:</strong> If a line is tangent to a curve, set them equal → $\Delta = 0$. If it intersects, $\Delta > 0$. If no intersection, $\Delta < 0$.</div>
+
+        <h4>Sum &amp; Product of Roots</h4>
+        <div class="formula"><span class="formula__eq">$\alpha + \beta = -\frac{b}{a} \qquad \alpha\beta = \frac{c}{a}$</span></div>
+
+        <h4>Intersection of Line and Curve</h4>
+        <div class="example">
+          <div class="example__title">Example: Find where $y = x^2 + 2$ meets $y = 3x$</div>
+          <p class="step">$x^2 + 2 = 3x$<br>$x^2 - 3x + 2 = 0$<br>$(x-1)(x-2) = 0$<br>$x = 1 \Rightarrow y = 3$, $x = 2 \Rightarrow y = 6$<br>Points: $(1,3)$ and $(2,6)$</p>
+        </div>
+        <div class="callout callout--tip"><strong>Exam Tip:</strong> When the question says "find the values of $k$ for which the line is tangent to the curve", always set equal, rearrange to standard form, then set $\Delta = 0$.</div>
+      </div>
+
+      <div class="card">
+        <h3>Quadratic Inequalities</h3>
+        <p>Solve $ax^2 + bx + c > 0$ (or $< 0$):</p>
+        <div class="example">
+          <div class="example__title">Steps</div>
+          <p>1. Factorise (or use formula) → find roots $\alpha, \beta$ ($\alpha < \beta$)<br>
+          2. Sketch the parabola<br>
+          3. $> 0$: outside region → $x < \alpha$ or $x > \beta$<br>
+          4. $< 0$: inside region → $\alpha < x < \beta$</p>
+        </div>
+        <div class="example">
+          <div class="example__title">Example: $x^2 - 5x + 6 < 0$</div>
+          <p class="step">$(x-2)(x-3) < 0$<br>Roots: 2, 3. Parabola opens up.<br>Answer: $2 < x < 3$</p>
+        </div>
+        <div class="callout callout--danger"><strong>Common Mistake:</strong> Dividing both sides of an inequality by a negative number without flipping the sign. Also, never divide by $x$ (it could be negative).</div>
+
+        <h4>Quadratic in Disguise</h4>
+        <div class="example">
+          <p class="step">$x^4 - 5x^2 + 4 = 0$<br>Let $u = x^2$: $u^2 - 5u + 4 = 0$<br>$(u-1)(u-4) = 0 \Rightarrow u = 1$ or $4$<br>$x = \pm 1, \pm 2$</p>
+        </div>
+
+        <h4>Simultaneous Equations (Linear + Quadratic)</h4>
+        <div class="example">
+          <div class="example__title">Method</div>
+          <p>1. From linear equation, express one variable in terms of the other<br>
+          2. Substitute into quadratic equation<br>
+          3. Solve the resulting quadratic<br>
+          4. Substitute back to find the other variable</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Graphs of Quadratics</h3>
+        <p>$y = a(x+p)^2 + q$</p>
+        <table>
+          <tr><th>$a > 0$</th><td>U-shaped (opens up), minimum at vertex</td></tr>
+          <tr><th>$a < 0$</th><td>∩-shaped (opens down), maximum at vertex</td></tr>
+        </table>
+        <h4>Finding Intersections</h4>
+        <div class="formula formula--teal"><span class="formula__label">With x-axis:</span><span class="formula__eq">Set $y = 0$, solve the quadratic</span></div>
+        <div class="formula formula--teal"><span class="formula__label">With y-axis:</span><span class="formula__eq">Set $x = 0$, read off $c$</span></div>
+        <div class="formula formula--teal"><span class="formula__label">Two curves:</span><span class="formula__eq">Equate and solve the resulting equation</span></div>
+
+        <h4>Max/Min Value</h4>
+        <p>Complete the square. The min ($a>0$) or max ($a<0$) value is $q$.</p>
+        <div class="callout callout--rule"><strong>Exam Tip:</strong> "Show that $f(x) > 0$ for all $x$" → complete the square, show the minimum value is positive. For example: $x^2 - 4x + 7 = (x-2)^2 + 3 \geq 3 > 0$ for all $x$.</div>
+
+        <h4>Number of Roots from Graph</h4>
+        <p>The number of times the parabola crosses the x-axis tells you about $\Delta$:</p>
+        <table>
+          <tr><th>Crossings</th><th>$\Delta$</th><th>Roots</th></tr>
+          <tr><td>2</td><td>$\Delta > 0$</td><td>Two distinct</td></tr>
+          <tr><td>1 (tangent)</td><td>$\Delta = 0$</td><td>One repeated</td></tr>
+          <tr><td>0</td><td>$\Delta < 0$</td><td>None</td></tr>
+        </table>
+      </div>
+
+    </div>
+    </div>
+
+    <!-- ═══ 1 · FUNCTIONS ═══ -->
+    <div class="panel">
+    <div class="grid-auto">
+
+      <div class="card">
+        <h3>Definitions</h3>
+        <div class="formula"><span class="formula__label">Domain</span><span class="formula__eq">Set of allowed $x$-values (inputs)</span></div>
+        <div class="formula formula--green"><span class="formula__label">Range (codomain)</span><span class="formula__eq">Set of resulting $y$-values (outputs)</span></div>
+        <div class="formula formula--cyan"><span class="formula__label">Function</span><span class="formula__eq">Each $x$ maps to exactly ONE $y$</span></div>
+        <table>
+          <tr><th>Type</th><th>Meaning</th><th>Has Inverse?</th></tr>
+          <tr><td>One-to-one</td><td>Each $y$ comes from 1 $x$</td><td>Yes</td></tr>
+          <tr><td>Many-to-one</td><td>Multiple $x$ give same $y$</td><td>No</td></tr>
+        </table>
+        <p style="margin-top:8px">Restrict domain to make many-to-one → one-to-one, then inverse exists.</p>
+        <div class="example">
+          <div class="example__title">Example: Restricting Domain</div>
+          <p>$f(x) = x^2$ is many-to-one on $\mathbb{R}$.<br>
+          Restrict to $x \geq 0$: now one-to-one, inverse is $f^{-1}(x) = \sqrt{x}$.<br>
+          Restrict to $x \leq 0$: now one-to-one, inverse is $f^{-1}(x) = -\sqrt{x}$.</p>
+        </div>
+        <div class="callout callout--tip"><strong>Exam Tip:</strong> "Find the greatest/least value of $a$ such that $f$ has an inverse" → find the vertex and restrict at that point.</div>
+      </div>
+
+      <div class="card">
+        <h3>Composite Functions</h3>
+        <div class="formula formula--amber"><span class="formula__label">$fg(x)$ means</span><span class="formula__eq">$f$ applied to $g(x)$: $f(g(x))$</span></div>
+        <div class="callout callout--warn"><strong>Order matters!</strong> $fg \neq gf$ in general. Apply right to left: $fg$ → do $g$ first, then $f$.</div>
+        <div class="example">
+          <div class="example__title">Example: $f(x)=2x+1$, $g(x)=x^2$</div>
+          <p class="step">$fg(x) = f(x^2) = 2x^2 + 1$<br>$gf(x) = g(2x+1) = (2x+1)^2 = 4x^2+4x+1$</p>
+        </div>
+        <div class="formula formula--teal"><span class="formula__label">Domain of $fg$</span><span class="formula__eq">$x$-values in domain of $g$ such that $g(x)$ is in domain of $f$</span></div>
+
+        <h4>Solving Composite Function Equations</h4>
+        <div class="example">
+          <div class="example__title">Example: Solve $fg(x) = 7$</div>
+          <p class="step">$2x^2 + 1 = 7$<br>$2x^2 = 6 \Rightarrow x^2 = 3$<br>$x = \pm\sqrt{3}$</p>
+          <p>Check solutions are in the domain of $g$!</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Inverse Functions</h3>
+        <div class="formula formula--red"><span class="formula__label">Relationship</span><span class="formula__eq">$ff^{-1}(x) = f^{-1}f(x) = x$</span></div>
+        <div class="formula"><span class="formula__label">Domain of $f^{-1}$</span><span class="formula__eq">$=$ Range of $f$</span></div>
+        <div class="formula"><span class="formula__label">Range of $f^{-1}$</span><span class="formula__eq">$=$ Domain of $f$</span></div>
+        <h4>Finding $f^{-1}(x)$</h4>
+        <div class="example">
+          <div class="example__title">Steps</div>
+          <p>1. Write $y = f(x)$<br>2. Rearrange to make $x$ the subject<br>3. Replace $x$ with $f^{-1}(x)$ and $y$ with $x$</p>
+        </div>
+        <div class="example">
+          <div class="example__title">Example: $f(x) = \frac{2x+3}{x-1}$, $x \neq 1$</div>
+          <p class="step">$y = \frac{2x+3}{x-1}$<br>
+          $y(x-1) = 2x+3$<br>
+          $xy - y = 2x + 3$<br>
+          $xy - 2x = y + 3$<br>
+          $x(y-2) = y+3$<br>
+          $x = \frac{y+3}{y-2}$<br>
+          $f^{-1}(x) = \frac{x+3}{x-2}$, $x \neq 2$</p>
+        </div>
+        <div class="callout callout--rule"><strong>Geometrically:</strong> $y = f^{-1}(x)$ is the reflection of $y = f(x)$ in the line $y = x$.</div>
+        <div class="callout callout--danger"><strong>Common Mistake:</strong> Forgetting to state the domain of the inverse function. The domain of $f^{-1}$ is the range of $f$.</div>
+      </div>
+
+      <div class="card">
+        <h3>Graph Transformations</h3>
+        <table>
+          <tr><th>Transform</th><th>Effect on graph</th></tr>
+          <tr><td>$f(x) + a$</td><td>Shift UP by $a$</td></tr>
+          <tr><td>$f(x) - a$</td><td>Shift DOWN by $a$</td></tr>
+          <tr><td>$f(x + a)$</td><td>Shift LEFT by $a$</td></tr>
+          <tr><td>$f(x - a)$</td><td>Shift RIGHT by $a$</td></tr>
+          <tr><td>$af(x)$</td><td>Stretch vertically, scale factor $a$ (from $x$-axis)</td></tr>
+          <tr><td>$f(ax)$</td><td>Stretch horizontally, scale factor $\frac{1}{a}$ (from $y$-axis)</td></tr>
+          <tr><td>$-f(x)$</td><td>Reflect in $x$-axis</td></tr>
+          <tr><td>$f(-x)$</td><td>Reflect in $y$-axis</td></tr>
+        </table>
+        <div class="callout callout--rule"><strong>Memory trick:</strong> Inside bracket → affects $x$ (horizontal) and is <em>counterintuitive</em>. Outside → affects $y$ (vertical) and is <em>intuitive</em>.</div>
+        <div class="example">
+          <div class="example__title">Example: $y = \sin(2x - 60°)$</div>
+          <p>Write as $\sin(2(x - 30°))$:<br>
+          • Compress horizontally by factor $\frac{1}{2}$ (period $180°$)<br>
+          • Then shift right $30°$</p>
+        </div>
+        <div class="callout callout--tip"><strong>Exam Tip:</strong> For combined transformations, always factor out the coefficient of $x$ inside the bracket first to find the correct shift.</div>
+      </div>
+
+      <div class="card">
+        <h3>Modulus Function $|x|$</h3>
+        <div class="formula"><span class="formula__eq">$|x| = \begin{cases} x & \text{if } x \geq 0 \\ -x & \text{if } x < 0 \end{cases}$</span></div>
+        <p>Graph of $y = |f(x)|$: reflect any part below $x$-axis up.</p>
+        <p>Graph of $y = f(|x|)$: keep $x \geq 0$ part; reflect it in $y$-axis.</p>
+        <h4>Solving $|f(x)| = k$</h4>
+        <div class="example">
+          <p class="step">$|2x - 3| = 5$<br>
+          Case 1: $2x-3 = 5 \Rightarrow x = 4$<br>
+          Case 2: $2x-3 = -5 \Rightarrow x = -1$</p>
+        </div>
+        <h4>Solving $|f(x)| = |g(x)|$</h4>
+        <div class="example">
+          <div class="example__title">Method: Square both sides</div>
+          <p class="step">$|2x-1| = |x+3|$<br>
+          $(2x-1)^2 = (x+3)^2$<br>
+          $4x^2 - 4x + 1 = x^2 + 6x + 9$<br>
+          $3x^2 - 10x - 8 = 0$<br>
+          $(3x+2)(x-4) = 0$<br>
+          $x = -\frac{2}{3}$ or $x = 4$</p>
+        </div>
+        <h4>Solving $|f(x)| < k$</h4>
+        <div class="example"><p>$|f(x)| < k \Rightarrow -k < f(x) < k$, solve as compound inequality.</p></div>
+        <div class="callout callout--danger"><strong>Common Mistake:</strong> In $|f(x)| > k$: this gives $f(x) > k$ OR $f(x) < -k$ (not AND!).</div>
+      </div>
+
+    </div>
+    </div>
+
+    <!-- ═══ 2 · COORDINATE GEOMETRY ═══ -->
+    <div class="panel">
+    <div class="grid-auto">
+
+      <div class="card">
+        <h3>Lines — Core Formulas</h3>
+        <div class="formula"><span class="formula__label">Gradient</span><span class="formula__eq">$m = \frac{y_2 - y_1}{x_2 - x_1}$</span></div>
+        <div class="formula formula--green"><span class="formula__label">Distance between two points</span><span class="formula__eq">$d = \sqrt{(x_2-x_1)^2 + (y_2-y_1)^2}$</span></div>
+        <div class="formula formula--cyan"><span class="formula__label">Midpoint</span><span class="formula__eq">$M = \left(\frac{x_1+x_2}{2},\; \frac{y_1+y_2}{2}\right)$</span></div>
+        <div class="formula formula--amber"><span class="formula__label">Line through $(x_1,y_1)$ with gradient $m$</span><span class="formula__eq">$y - y_1 = m(x - x_1)$</span></div>
+        <div class="formula formula--teal"><span class="formula__label">Perpendicular gradient</span><span class="formula__eq">$m_2 = -\frac{1}{m_1}$ (product = $-1$)</span></div>
+        <div class="formula formula--red"><span class="formula__label">Parallel lines</span><span class="formula__eq">Same gradient: $m_1 = m_2$</span></div>
+
+        <h4>Forms of a Line Equation</h4>
+        <table>
+          <tr><th>Form</th><th>Equation</th><th>Use</th></tr>
+          <tr><td>Point-slope</td><td>$y - y_1 = m(x - x_1)$</td><td>When you know a point and gradient</td></tr>
+          <tr><td>Slope-intercept</td><td>$y = mx + c$</td><td>When you need $y$-intercept</td></tr>
+          <tr><td>General</td><td>$ax + by + c = 0$</td><td>Standard final answer form</td></tr>
+        </table>
+      </div>
+
+      <div class="card">
+        <h3>Circle</h3>
+        <div class="formula formula--amber"><span class="formula__label">Centre $(a,b)$, radius $r$</span><span class="formula__eq">$(x-a)^2 + (y-b)^2 = r^2$</span></div>
+        <div class="formula formula--green"><span class="formula__label">Expanded (general) form</span><span class="formula__eq">$x^2 + y^2 + 2gx + 2fy + c = 0$</span></div>
+        <p>Centre = $(-g, -f)$, radius = $\sqrt{g^2 + f^2 - c}$</p>
+        <h4>Converting to standard form</h4>
+        <div class="example">
+          <div class="example__title">Complete the square on $x$ and $y$</div>
+          <p class="step">$x^2+y^2-4x+6y-3=0$<br>
+          $(x-2)^2-4 + (y+3)^2-9 - 3 = 0$<br>
+          $(x-2)^2 + (y+3)^2 = 16$<br>
+          Centre $(2,-3)$, $r = 4$</p>
+        </div>
+        <h4>Tangent to circle at $(x_1,y_1)$</h4>
+        <div class="formula formula--red"><span class="formula__eq">Gradient of radius $= \frac{y_1-b}{x_1-a}$; tangent gradient $= -\frac{x_1-a}{y_1-b}$</span></div>
+        <div class="callout callout--rule"><strong>Key property:</strong> Tangent $\perp$ radius at point of contact.</div>
+        <div class="callout callout--tip"><strong>Exam Tip:</strong> If a question gives you a tangent and asks for the centre, use the fact that the line from centre to the point of tangency is perpendicular to the tangent.</div>
+      </div>
+
+      <div class="card">
+        <h3>Perpendicular Bisector &amp; Circle from 3 Points</h3>
+        <p>Perpendicular bisector of $AB$ passes through midpoint of $AB$ and has gradient $-\frac{1}{m_{AB}}$.</p>
+        <div class="example">
+          <div class="example__title">Finding circle equation from 3 points</div>
+          <p>1. Find perpendicular bisectors of two chords<br>
+          2. Their intersection is the centre<br>
+          3. Find radius = distance from centre to any point</p>
+        </div>
+        <h4>Point inside/on/outside circle?</h4>
+        <div class="formula"><span class="formula__eq">$d =$ distance from point to centre<br>$d < r \Rightarrow$ inside, $d = r \Rightarrow$ on, $d > r \Rightarrow$ outside</span></div>
+        <h4>Line Intersecting Circle</h4>
+        <p>Substitute line into circle → quadratic. Use discriminant:</p>
+        <table>
+          <tr><th>$\Delta$</th><th>Intersection</th></tr>
+          <tr><td>$> 0$</td><td>2 points (secant)</td></tr>
+          <tr><td>$= 0$</td><td>1 point (tangent)</td></tr>
+          <tr><td>$< 0$</td><td>No intersection</td></tr>
+        </table>
+      </div>
+
+      <div class="card">
+        <h3>Useful Facts</h3>
+        <h4>Angle in semicircle = 90°</h4>
+        <p>If $AB$ is a diameter and $P$ is on the circle, $\angle APB = 90°$.</p>
+        <div class="formula formula--teal"><span class="formula__label">Use:</span><span class="formula__eq">gradient($AP$) $\times$ gradient($BP$) $= -1$</span></div>
+        <h4>Area of triangle (from coordinates)</h4>
+        <div class="formula"><span class="formula__eq">$A = \frac{1}{2} |x_1(y_2-y_3) + x_2(y_3-y_1) + x_3(y_1-y_2)|$</span></div>
+        <h4>Foot of perpendicular from point to line</h4>
+        <div class="example">
+          <div class="example__title">Method</div>
+          <p>1. Find the gradient of the given line<br>
+          2. Perpendicular has gradient $= -\frac{1}{m}$<br>
+          3. Write equation of perpendicular through the external point<br>
+          4. Solve simultaneously to find intersection (the foot)</p>
+        </div>
+        <h4>Shortest distance from point to line</h4>
+        <p>= distance from the point to the foot of perpendicular.</p>
+        <div class="callout callout--tip"><strong>Exam Tip:</strong> For "shortest distance from a point to a line", always find the foot of the perpendicular first, then use the distance formula.</div>
+      </div>
+
+    </div>
+    </div>
+
+    <!-- ═══ 3 · CIRCULAR MEASURE ═══ -->
+    <div class="panel">
+    <div class="grid-auto">
+
+      <div class="card">
+        <h3>Radians</h3>
+        <div class="formula formula--amber"><span class="formula__label">Conversion</span><span class="formula__eq">$\pi$ radians $= 180°$</span></div>
+        <div class="formula"><span class="formula__eq">Degrees → Rad: multiply by $\frac{\pi}{180}$<br>Rad → Degrees: multiply by $\frac{180}{\pi}$</span></div>
+        <table>
+          <tr><th>Degrees</th><th>Radians</th></tr>
+          <tr><td>$30°$</td><td>$\frac{\pi}{6}$</td></tr>
+          <tr><td>$45°$</td><td>$\frac{\pi}{4}$</td></tr>
+          <tr><td>$60°$</td><td>$\frac{\pi}{3}$</td></tr>
+          <tr><td>$90°$</td><td>$\frac{\pi}{2}$</td></tr>
+          <tr><td>$120°$</td><td>$\frac{2\pi}{3}$</td></tr>
+          <tr><td>$180°$</td><td>$\pi$</td></tr>
+          <tr><td>$270°$</td><td>$\frac{3\pi}{2}$</td></tr>
+          <tr><td>$360°$</td><td>$2\pi$</td></tr>
+        </table>
+        <div class="callout callout--danger"><strong>Common Mistake:</strong> Calculator in wrong mode! Always check your calculator is in RADIANS when the question uses radians (and DEGREES when it uses degrees).</div>
+      </div>
+
+      <div class="card">
+        <h3>Arc Length &amp; Sector/Segment Area</h3>
+        <div class="formula formula--green"><span class="formula__label">Arc length ($\theta$ in radians)</span><span class="formula__eq">$s = r\theta$</span></div>
+        <div class="formula formula--cyan"><span class="formula__label">Area of sector</span><span class="formula__eq">$A = \frac{1}{2}r^2\theta$</span></div>
+        <div class="formula formula--red"><span class="formula__label">Area of triangle (in sector)</span><span class="formula__eq">$A = \frac{1}{2}r^2\sin\theta$</span></div>
+        <div class="formula formula--amber"><span class="formula__label">Area of segment</span><span class="formula__eq">$A = \frac{1}{2}r^2(\theta - \sin\theta)$</span></div>
+        <div class="callout callout--rule"><strong>Segment = Sector − Triangle</strong></div>
+        <div class="example">
+          <div class="example__title">Example: $r=5$, $\theta=1.2$ rad</div>
+          <p class="step">Arc $= 5 \times 1.2 = 6$ cm<br>
+          Sector area $= \frac{1}{2} \times 25 \times 1.2 = 15$ cm²<br>
+          Triangle area $= \frac{1}{2} \times 25 \times \sin(1.2) \approx 11.65$ cm²<br>
+          Segment area $\approx 15 - 11.65 = 3.35$ cm²</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Perimeter Problems</h3>
+        <div class="formula formula--teal"><span class="formula__label">Perimeter of sector</span><span class="formula__eq">$P = r\theta + 2r = r(\theta + 2)$</span></div>
+        <div class="formula formula--pink"><span class="formula__label">Perimeter of segment</span><span class="formula__eq">$P = r\theta + 2r\sin\left(\frac{\theta}{2}\right)$</span></div>
+        <p>Chord length $= 2r\sin\left(\frac{\theta}{2}\right)$</p>
+
+        <h4>Complex Perimeter Example</h4>
+        <div class="example">
+          <div class="example__title">Shaded region perimeter</div>
+          <p>Often involves: arc of large circle + straight lines + arc of small circle. Identify each boundary piece carefully and add them up.</p>
+        </div>
+
+        <h4>Small Angle Approximations ($\theta$ in rad, $\theta \to 0$)</h4>
+        <div class="formula"><span class="formula__eq">$\sin\theta \approx \theta \quad \cos\theta \approx 1 - \frac{\theta^2}{2} \quad \tan\theta \approx \theta$</span></div>
+        <div class="callout callout--tip"><strong>Exam Tip:</strong> These approximations are rarely tested in P1, but understanding them helps with checking answers.</div>
+      </div>
+
+    </div>
+    </div>
+
+    <!-- ═══ 4 · TRIGONOMETRY ═══ -->
+    <div class="panel">
+    <div class="grid-auto">
+
+      <div class="card">
+        <h3>Key Values &amp; Identities</h3>
+        <table>
+          <tr><th>$\theta$</th><th>$\sin\theta$</th><th>$\cos\theta$</th><th>$\tan\theta$</th></tr>
+          <tr><td>$0°$</td><td>$0$</td><td>$1$</td><td>$0$</td></tr>
+          <tr><td>$30°$</td><td>$\frac{1}{2}$</td><td>$\frac{\sqrt{3}}{2}$</td><td>$\frac{1}{\sqrt{3}}$</td></tr>
+          <tr><td>$45°$</td><td>$\frac{1}{\sqrt{2}}$</td><td>$\frac{1}{\sqrt{2}}$</td><td>$1$</td></tr>
+          <tr><td>$60°$</td><td>$\frac{\sqrt{3}}{2}$</td><td>$\frac{1}{2}$</td><td>$\sqrt{3}$</td></tr>
+          <tr><td>$90°$</td><td>$1$</td><td>$0$</td><td>undef</td></tr>
+        </table>
+        <div class="formula formula--red"><span class="formula__label">Pythagorean identity</span><span class="formula__eq">$\sin^2\theta + \cos^2\theta = 1$</span></div>
+        <div class="formula formula--green"><span class="formula__label">Rearrangements</span><span class="formula__eq">$\sin^2\theta = 1 - \cos^2\theta \qquad \cos^2\theta = 1 - \sin^2\theta$</span></div>
+        <div class="formula formula--amber"><span class="formula__label">Quotient identity</span><span class="formula__eq">$\tan\theta = \frac{\sin\theta}{\cos\theta}$</span></div>
+        <div class="callout callout--tip"><strong>When to use which identity:</strong><br>
+        • Equation has $\sin$ and $\cos$ → try $\sin^2 + \cos^2 = 1$<br>
+        • Equation has $\sin$ and $\cos$ but simpler → try $\tan = \sin/\cos$<br>
+        • Equation is all in one trig function → solve directly</div>
+      </div>
+
+      <div class="card">
+        <h3>CAST Diagram</h3>
+        <p>Which trig ratios are positive in each quadrant:</p>
+        <table>
+          <tr><th>Quadrant</th><th>Angles</th><th>Positive</th></tr>
+          <tr><td>1st (0–90°)</td><td>$\theta$</td><td><strong>A</strong>ll</td></tr>
+          <tr><td>2nd (90–180°)</td><td>$180°-\theta$</td><td><strong>S</strong>in</td></tr>
+          <tr><td>3rd (180–270°)</td><td>$180°+\theta$</td><td><strong>T</strong>an</td></tr>
+          <tr><td>4th (270–360°)</td><td>$360°-\theta$</td><td><strong>C</strong>os</td></tr>
+        </table>
+        <div class="example">
+          <div class="example__title">Example: solve $\sin x = 0.5$ for $0° \leq x \leq 360°$</div>
+          <p class="step">Principal value: $x = 30°$<br>
+          $\sin$ positive in Q1 and Q2<br>
+          → $x = 30°$ or $180°-30° = 150°$</p>
+        </div>
+        <div class="callout callout--danger"><strong>Common Mistake:</strong> Only finding one solution when there are two (or more) in the given range. Always use CAST to check all quadrants.</div>
+      </div>
+
+      <div class="card">
+        <h3>Solving Trig Equations</h3>
+        <div class="callout callout--rule"><strong>Always</strong> find all solutions in the given range using CAST / symmetry / graph.</div>
+        <h4>Steps for $\sin(n\theta + \alpha) = k$</h4>
+        <div class="example">
+          <p>1. Adjust the range: if solving for $0° \leq \theta \leq 360°$, new range for $(n\theta + \alpha)$ is $\alpha \leq n\theta+\alpha \leq 360°n + \alpha$<br>
+          2. Find principal value: $\sin^{-1}(k)$<br>
+          3. Use CAST to get ALL values of $(n\theta+\alpha)$ in the new range<br>
+          4. Solve each for $\theta$</p>
+        </div>
+        <div class="example">
+          <div class="example__title">Example: solve $2\sin(x+30°)=1$, $0° \leq x \leq 360°$</div>
+          <p class="step">$\sin(x+30°) = 0.5$<br>
+          Range: $30° \leq x+30° \leq 390°$<br>
+          $x+30° = 30°, 150°, 390°$ (next cycle)<br>
+          $x = 0°, 120°, 360°$</p>
+        </div>
+        <h4>Equations with $\tan$</h4>
+        <div class="example">
+          <div class="example__title">$\tan$ solutions repeat every $180°$</div>
+          <p class="step">$\tan\theta = k \Rightarrow \theta = \tan^{-1}(k), \; \theta + 180°, \; \theta + 360°, \ldots$</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Trig Graphs</h3>
+        <table>
+          <tr><th>Graph</th><th>Period</th><th>Amplitude</th><th>Key features</th></tr>
+          <tr><td>$y=\sin x$</td><td>$360°$</td><td>1</td><td>0 at 0°, 180°, 360°; max at 90°</td></tr>
+          <tr><td>$y=\cos x$</td><td>$360°$</td><td>1</td><td>1 at 0°; 0 at 90°; −1 at 180°</td></tr>
+          <tr><td>$y=\tan x$</td><td>$180°$</td><td>$\infty$</td><td>Asymptotes at 90°, 270°</td></tr>
+        </table>
+        <h4>$y = a\sin(bx) + c$ or $a\cos(bx) + c$</h4>
+        <div class="formula formula--teal"><span class="formula__eq">Amplitude $= |a|$</span></div>
+        <div class="formula formula--cyan"><span class="formula__eq">Period $= \frac{360°}{b}$ (or $\frac{2\pi}{b}$)</span></div>
+        <div class="formula formula--green"><span class="formula__eq">Vertical shift: midline at $y = c$</span></div>
+        <div class="formula formula--amber"><span class="formula__eq">Horizontal shift: $y = \sin(x - d)$ shifts RIGHT by $d$</span></div>
+        <div class="callout callout--warn"><strong>For $y=2\sin(3x-90°)$:</strong> write as $2\sin(3(x-30°))$ → shift right is $30°$, NOT $90°$!</div>
+      </div>
+
+      <div class="card">
+        <h3>$R\sin(x \pm \alpha)$ / $R\cos(x \pm \alpha)$</h3>
+        <p>Write $a\sin x + b\cos x$ in form $R\sin(x + \alpha)$:</p>
+        <div class="formula formula--red"><span class="formula__eq">$R = \sqrt{a^2 + b^2}$</span></div>
+        <div class="formula formula--red"><span class="formula__eq">$\tan\alpha = \frac{b}{a}$ (for $R\sin(x+\alpha) = a\sin x + b\cos x$)</span></div>
+        <div class="example">
+          <div class="example__title">Example: $3\sin x + 4\cos x = R\sin(x+\alpha)$</div>
+          <p class="step">$R = \sqrt{9+16} = 5$<br>
+          $\tan\alpha = \frac{4}{3} \Rightarrow \alpha \approx 53.1°$<br>
+          $= 5\sin(x + 53.1°)$</p>
+        </div>
+        <div class="callout callout--rule"><strong>Uses:</strong><br>
+        1. Finding max/min value: max $= R + c$, min $= -R + c$<br>
+        2. Solving $a\sin x + b\cos x = k$ becomes $R\sin(x+\alpha) = k$</div>
+        <div class="callout callout--tip"><strong>Exam Tip:</strong> Always state $R > 0$ and $0° < \alpha < 90°$ (or the appropriate range as given).</div>
+      </div>
+
+    </div>
+    </div>
+
+    <!-- ═══ 5 · SERIES ═══ -->
+    <div class="panel">
+    <div class="grid-auto">
+
+      <div class="card">
+        <h3>Binomial Expansion</h3>
+        <div class="formula formula--amber"><span class="formula__label">$(a + b)^n$, $n \in \mathbb{Z}^+$</span><span class="formula__eq">$(a+b)^n = \sum_{r=0}^{n} \binom{n}{r} a^{n-r} b^r$</span></div>
+        <div class="formula"><span class="formula__label">Binomial coefficient</span><span class="formula__eq">$\binom{n}{r} = \frac{n!}{r!(n-r)!}$</span></div>
+        <div class="formula formula--green"><span class="formula__label">General term ($(r+1)$th term)</span><span class="formula__eq">$T_{r+1} = \binom{n}{r} \cdot a^{n-r} \cdot b^r$</span></div>
+        <div class="example">
+          <div class="example__title">Expand $(2x + 3)^4$</div>
+          <p class="step">$T_1 = \binom{4}{0}(2x)^4(3)^0 = 16x^4$<br>
+          $T_2 = \binom{4}{1}(2x)^3(3)^1 = 4 \cdot 8x^3 \cdot 3 = 96x^3$<br>
+          $T_3 = \binom{4}{2}(2x)^2(3)^2 = 6 \cdot 4x^2 \cdot 9 = 216x^2$<br>
+          $T_4 = \binom{4}{3}(2x)^1(3)^3 = 4 \cdot 2x \cdot 27 = 216x$<br>
+          $T_5 = \binom{4}{4}(2x)^0(3)^4 = 81$</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Finding Specific Terms</h3>
+        <h4>Term Independent of $x$ (Constant Term)</h4>
+        <div class="example">
+          <div class="example__title">Method</div>
+          <p>1. Write the general term $T_{r+1}$<br>
+          2. Collect all powers of $x$<br>
+          3. Set the total power of $x = 0$<br>
+          4. Solve for $r$ (must be non-negative integer)</p>
+        </div>
+        <div class="example">
+          <div class="example__title">Example: Constant term in $\left(2x + \frac{3}{x}\right)^6$</div>
+          <p class="step">$T_{r+1} = \binom{6}{r}(2x)^{6-r}\left(\frac{3}{x}\right)^r$<br>
+          $= \binom{6}{r} \cdot 2^{6-r} \cdot 3^r \cdot x^{6-r} \cdot x^{-r}$<br>
+          $= \binom{6}{r} \cdot 2^{6-r} \cdot 3^r \cdot x^{6-2r}$<br>
+          Set $6 - 2r = 0 \Rightarrow r = 3$<br>
+          $T_4 = \binom{6}{3} \cdot 2^3 \cdot 3^3 = 20 \cdot 8 \cdot 27 = 4320$</p>
+        </div>
+        <h4>Finding a Specific Coefficient</h4>
+        <div class="example">
+          <div class="example__title">Example: Coefficient of $x^3$ in $(1 + 2x)^8$</div>
+          <p class="step">$T_{r+1} = \binom{8}{r}(1)^{8-r}(2x)^r = \binom{8}{r} \cdot 2^r \cdot x^r$<br>
+          For $x^3$: $r = 3$<br>
+          Coefficient $= \binom{8}{3} \cdot 2^3 = 56 \cdot 8 = 448$</p>
+        </div>
+        <div class="callout callout--rule"><strong>Method:</strong> Write general term, collect powers of $x$, set power = required value, solve for $r$. If $r$ is not a non-negative integer $\leq n$, the term doesn't exist.</div>
+      </div>
+
+      <div class="card">
+        <h3>Arithmetic Progression (AP)</h3>
+        <p>Sequence: $a, a+d, a+2d, \ldots$ (constant difference $d$)</p>
+        <div class="formula formula--cyan"><span class="formula__label">$n$th term</span><span class="formula__eq">$u_n = a + (n-1)d$</span></div>
+        <div class="formula formula--green"><span class="formula__label">Sum of first $n$ terms</span><span class="formula__eq">$S_n = \frac{n}{2}[2a + (n-1)d]$</span></div>
+        <div class="formula formula--teal"><span class="formula__label">Or equivalently</span><span class="formula__eq">$S_n = \frac{n}{2}(a + l)$ where $l$ = last term</span></div>
+        <div class="example">
+          <div class="example__title">Example: AP 3, 7, 11, ... Find $S_{20}$</div>
+          <p class="step">$a=3$, $d=4$, $n=20$<br>
+          $S_{20} = \frac{20}{2}[2(3) + 19(4)] = 10[6+76] = 10 \times 82 = 820$</p>
+        </div>
+        <h4>Common Exam Setups</h4>
+        <p>• "Sum of first $n$ terms $> 500$" → inequality in $n$, solve<br>
+        • "Three consecutive AP terms" → let them be $a-d$, $a$, $a+d$<br>
+        • "Four consecutive AP terms" → let $a-3d$, $a-d$, $a+d$, $a+3d$</p>
+        <div class="formula formula--amber"><span class="formula__label">$\sum_{r=1}^{n} r$</span><span class="formula__eq">$= \frac{n(n+1)}{2}$</span></div>
+      </div>
+
+      <div class="card">
+        <h3>Geometric Progression (GP)</h3>
+        <p>Sequence: $a, ar, ar^2, \ldots$ (constant ratio $r$)</p>
+        <div class="formula formula--red"><span class="formula__label">$n$th term</span><span class="formula__eq">$u_n = ar^{n-1}$</span></div>
+        <div class="formula formula--amber"><span class="formula__label">Sum of first $n$ terms</span><span class="formula__eq">$S_n = \frac{a(1-r^n)}{1-r}$ if $r \neq 1$</span></div>
+        <div class="formula formula--green"><span class="formula__label">Sum to infinity ($|r| < 1$ only)</span><span class="formula__eq">$S_\infty = \frac{a}{1-r}$</span></div>
+        <div class="callout callout--rule"><strong>$S_\infty$ exists only when $|r| < 1$ (i.e., $-1 < r < 1$)</strong></div>
+        <div class="example">
+          <div class="example__title">Example: GP 4, 2, 1, 0.5, ... Find $S_\infty$</div>
+          <p class="step">$a=4$, $r=0.5$<br>$S_\infty = \frac{4}{1-0.5} = \frac{4}{0.5} = 8$</p>
+        </div>
+        <h4>Finding $r$ or $a$ from given info</h4>
+        <div class="example">
+          <p class="step">Given $u_2=6$ and $u_5=48$:<br>
+          $u_2 = ar = 6 \quad u_5 = ar^4 = 48$<br>
+          Divide: $r^3 = 8 \Rightarrow r = 2$, $a = 3$</p>
+        </div>
+        <h4>Three consecutive GP terms</h4>
+        <div class="formula formula--pink"><span class="formula__eq">Let them be $\frac{a}{r}$, $a$, $ar$ (product $= a^3$)</span></div>
+        <div class="callout callout--tip"><strong>Exam Tip:</strong> "Show that the GP converges" means show $|r| < 1$. "Find the range of values of $k$ for which the series converges" → solve $|r(k)| < 1$.</div>
+      </div>
+
+    </div>
+    </div>
+
+    <!-- ═══ 6 · DIFFERENTIATION ═══ -->
+    <div class="panel">
+    <div class="grid-auto">
+
+      <div class="card">
+        <h3>Core Rules</h3>
+        <div class="formula formula--amber"><span class="formula__label">Power rule</span><span class="formula__eq">$\frac{d}{dx}[x^n] = nx^{n-1}$</span></div>
+        <div class="formula formula--green"><span class="formula__label">Constant × function</span><span class="formula__eq">$\frac{d}{dx}[af(x)] = af'(x)$</span></div>
+        <div class="formula formula--cyan"><span class="formula__label">Sum/difference</span><span class="formula__eq">$\frac{d}{dx}[f \pm g] = f' \pm g'$</span></div>
+        <div class="formula formula--teal"><span class="formula__label">Chain rule</span><span class="formula__eq">$\frac{dy}{dx} = \frac{dy}{du} \cdot \frac{du}{dx}$<br>$\frac{d}{dx}[f(g(x))] = f'(g(x)) \cdot g'(x)$</span></div>
+        <div class="example">
+          <div class="example__title">Chain rule: $y = (3x^2+1)^5$</div>
+          <p class="step">Let $u = 3x^2+1$, $y = u^5$<br>
+          $\frac{dy}{du} = 5u^4$, $\frac{du}{dx} = 6x$<br>
+          $\frac{dy}{dx} = 5(3x^2+1)^4 \cdot 6x = 30x(3x^2+1)^4$</p>
+        </div>
+        <div class="formula formula--red"><span class="formula__label">Product rule</span><span class="formula__eq">$\frac{d}{dx}[uv] = u'v + uv'$</span></div>
+        <div class="formula formula--pink"><span class="formula__label">Quotient rule</span><span class="formula__eq">$\frac{d}{dx}\left[\frac{u}{v}\right] = \frac{u'v - uv'}{v^2}$</span></div>
+        <div class="callout callout--tip"><strong>Exam Tip:</strong> Before differentiating, always try to simplify first. E.g., $\frac{x^3+2x}{x} = x^2+2$ is much easier to differentiate.</div>
+      </div>
+
+      <div class="card">
+        <h3>Standard Derivatives</h3>
+        <table>
+          <tr><th>$f(x)$</th><th>$f'(x)$</th></tr>
+          <tr><td>$x^n$</td><td>$nx^{n-1}$</td></tr>
+          <tr><td>$c$ (constant)</td><td>$0$</td></tr>
+          <tr><td>$e^x$</td><td>$e^x$</td></tr>
+          <tr><td>$e^{ax}$</td><td>$ae^{ax}$</td></tr>
+          <tr><td>$\ln x$</td><td>$\frac{1}{x}$</td></tr>
+          <tr><td>$\sin x$</td><td>$\cos x$</td></tr>
+          <tr><td>$\cos x$</td><td>$-\sin x$</td></tr>
+          <tr><td>$\sin(ax+b)$</td><td>$a\cos(ax+b)$</td></tr>
+          <tr><td>$\cos(ax+b)$</td><td>$-a\sin(ax+b)$</td></tr>
+          <tr><td>$\tan x$</td><td>$\sec^2 x$</td></tr>
+          <tr><td>$\sqrt{x} = x^{1/2}$</td><td>$\frac{1}{2\sqrt{x}}$</td></tr>
+          <tr><td>$\frac{1}{x} = x^{-1}$</td><td>$-\frac{1}{x^2}$</td></tr>
+          <tr><td>$(ax+b)^n$</td><td>$an(ax+b)^{n-1}$</td></tr>
+          <tr><td>$\ln(ax+b)$</td><td>$\frac{a}{ax+b}$</td></tr>
+        </table>
+        <div class="callout callout--danger"><strong>Common Mistake:</strong> Forgetting the chain rule! $\frac{d}{dx}[\sin(3x)] = 3\cos(3x)$, NOT $\cos(3x)$.</div>
+      </div>
+
+      <div class="card">
+        <h3>Tangents &amp; Normals</h3>
+        <div class="formula formula--green"><span class="formula__label">Gradient of tangent at $x=a$</span><span class="formula__eq">$m = f'(a)$</span></div>
+        <div class="formula formula--cyan"><span class="formula__label">Equation of tangent at $(a, f(a))$</span><span class="formula__eq">$y - f(a) = f'(a)(x - a)$</span></div>
+        <div class="formula formula--red"><span class="formula__label">Gradient of normal</span><span class="formula__eq">$m_{\text{normal}} = -\frac{1}{f'(a)}$</span></div>
+        <div class="formula formula--amber"><span class="formula__label">Equation of normal at $(a, f(a))$</span><span class="formula__eq">$y - f(a) = -\frac{1}{f'(a)}(x - a)$</span></div>
+        <div class="example">
+          <div class="example__title">Example: $y = x^3 - 2x$ at $x = 2$</div>
+          <p class="step">$y(2) = 8-4 = 4$ → point $(2,4)$<br>
+          $y' = 3x^2-2$; $y'(2) = 12-2 = 10$<br>
+          Tangent: $y-4 = 10(x-2) \Rightarrow y = 10x-16$<br>
+          Normal: $y-4 = -\frac{1}{10}(x-2) \Rightarrow y = -\frac{1}{10}x + \frac{21}{5}$</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Stationary Points</h3>
+        <div class="formula formula--teal"><span class="formula__label">Stationary point condition</span><span class="formula__eq">$f'(x) = 0$</span></div>
+        <h4>Second Derivative Test</h4>
+        <table>
+          <tr><th>$f''(x)$ at stat. pt.</th><th>Type</th></tr>
+          <tr><td>$< 0$</td><td>Local maximum</td></tr>
+          <tr><td>$> 0$</td><td>Local minimum</td></tr>
+          <tr><td>$= 0$</td><td>Inconclusive — check gradient sign change</td></tr>
+        </table>
+        <h4>Nature by Gradient Sign Change</h4>
+        <table>
+          <tr><th>Left → Right</th><th>Type</th></tr>
+          <tr><td>$+$ → $-$</td><td>Maximum</td></tr>
+          <tr><td>$-$ → $+$</td><td>Minimum</td></tr>
+          <tr><td>$+$ → $+$ or $-$ → $-$</td><td>Point of inflection</td></tr>
+        </table>
+        <div class="example">
+          <div class="example__title">Example: $f(x) = 2x^3 - 3x^2 - 12x + 1$</div>
+          <p class="step">$f'(x) = 6x^2-6x-12 = 6(x-2)(x+1)$<br>
+          Stat pts: $x=2$ and $x=-1$<br>
+          $f''(x) = 12x - 6$<br>
+          $f''(2) = 18 > 0$ → minimum<br>
+          $f''(-1) = -18 < 0$ → maximum</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Rates of Change &amp; Optimisation</h3>
+        <div class="formula formula--green"><span class="formula__label">Increasing on interval</span><span class="formula__eq">$f'(x) > 0$</span></div>
+        <div class="formula formula--red"><span class="formula__label">Decreasing on interval</span><span class="formula__eq">$f'(x) < 0$</span></div>
+        <div class="formula formula--amber"><span class="formula__label">Connected rates of change</span><span class="formula__eq">$\frac{dy}{dt} = \frac{dy}{dx} \cdot \frac{dx}{dt}$</span></div>
+        <div class="example">
+          <div class="example__title">Example: sphere $V=\frac{4}{3}\pi r^3$, $\frac{dr}{dt}=2$ cm/s. Find $\frac{dV}{dt}$ when $r=5$.</div>
+          <p class="step">$\frac{dV}{dr} = 4\pi r^2$<br>
+          $\frac{dV}{dt} = \frac{dV}{dr} \cdot \frac{dr}{dt} = 4\pi(25) \cdot 2 = 200\pi$ cm³/s</p>
+        </div>
+        <h4>Optimisation Problems</h4>
+        <div class="example">
+          <div class="example__title">Steps</div>
+          <p>1. Write quantity to optimise as function of ONE variable<br>
+          2. Use constraints to eliminate extra variables<br>
+          3. Differentiate; set $= 0$; solve<br>
+          4. Verify it's max or min using $f''$ or sign change<br>
+          5. Find the optimum value</p>
+        </div>
+        <h4>From First Principles</h4>
+        <div class="formula"><span class="formula__eq">$f'(x) = \lim_{h \to 0} \frac{f(x+h) - f(x)}{h}$</span></div>
+      </div>
+
+    </div>
+    </div>
+
+    <!-- ═══ 7 · INTEGRATION ═══ -->
+    <div class="panel">
+    <div class="grid-auto">
+
+      <div class="card">
+        <h3>Core Rules</h3>
+        <div class="formula formula--amber"><span class="formula__label">Power rule ($n \neq -1$)</span><span class="formula__eq">$\int x^n\,dx = \frac{x^{n+1}}{n+1} + C$</span></div>
+        <div class="formula formula--green"><span class="formula__label">Constant</span><span class="formula__eq">$\int k\,dx = kx + C$</span></div>
+        <div class="formula formula--cyan"><span class="formula__label">Sum/difference</span><span class="formula__eq">$\int [f \pm g]\,dx = \int f\,dx \pm \int g\,dx$</span></div>
+        <div class="formula formula--teal"><span class="formula__label">Reverse chain (linear argument)</span><span class="formula__eq">$\int (ax+b)^n\,dx = \frac{(ax+b)^{n+1}}{a(n+1)} + C$</span></div>
+        <div class="example">
+          <div class="example__title">Example: $\int (3x+2)^4\,dx$</div>
+          <p class="step">$= \frac{(3x+2)^5}{3 \times 5} + C = \frac{(3x+2)^5}{15} + C$</p>
+        </div>
+        <div class="callout callout--warn"><strong>Always include $+C$ for indefinite integrals!</strong></div>
+        <div class="callout callout--danger"><strong>Common Mistake:</strong> Forgetting to divide by the coefficient of $x$ when integrating $(ax+b)^n$.</div>
+      </div>
+
+      <div class="card">
+        <h3>Standard Integrals</h3>
+        <table>
+          <tr><th>$f(x)$</th><th>$\int f(x)\,dx$</th></tr>
+          <tr><td>$x^n$ ($n \neq -1$)</td><td>$\frac{x^{n+1}}{n+1} + C$</td></tr>
+          <tr><td>$\frac{1}{x}$</td><td>$\ln|x| + C$</td></tr>
+          <tr><td>$e^x$</td><td>$e^x + C$</td></tr>
+          <tr><td>$e^{ax}$</td><td>$\frac{1}{a}e^{ax} + C$</td></tr>
+          <tr><td>$\sin x$</td><td>$-\cos x + C$</td></tr>
+          <tr><td>$\cos x$</td><td>$\sin x + C$</td></tr>
+          <tr><td>$\sin(ax+b)$</td><td>$-\frac{1}{a}\cos(ax+b) + C$</td></tr>
+          <tr><td>$\cos(ax+b)$</td><td>$\frac{1}{a}\sin(ax+b) + C$</td></tr>
+          <tr><td>$\sec^2 x$</td><td>$\tan x + C$</td></tr>
+          <tr><td>$\frac{1}{\sqrt{x}}$</td><td>$2\sqrt{x} + C$</td></tr>
+          <tr><td>$\frac{1}{ax+b}$</td><td>$\frac{1}{a}\ln|ax+b| + C$</td></tr>
+        </table>
+      </div>
+
+      <div class="card">
+        <h3>Definite Integrals</h3>
+        <div class="formula formula--red"><span class="formula__label">Fundamental theorem</span><span class="formula__eq">$\int_a^b f(x)\,dx = [F(x)]_a^b = F(b) - F(a)$</span></div>
+        <div class="callout callout--rule"><strong>No $+C$</strong> for definite integrals (it cancels).</div>
+        <div class="example">
+          <div class="example__title">Example: $\int_1^3 (x^2 + 2x)\,dx$</div>
+          <p class="step">$= \left[\frac{x^3}{3} + x^2\right]_1^3$<br>
+          $= \left(\frac{27}{3} + 9\right) - \left(\frac{1}{3} + 1\right)$<br>
+          $= 18 - \frac{4}{3} = \frac{50}{3}$</p>
+        </div>
+        <h4>Properties</h4>
+        <div class="formula formula--teal"><span class="formula__eq">$\int_a^b f\,dx = -\int_b^a f\,dx$<br>$\int_a^a f\,dx = 0$<br>$\int_a^b f\,dx + \int_b^c f\,dx = \int_a^c f\,dx$</span></div>
+      </div>
+
+      <div class="card">
+        <h3>Area Under a Curve</h3>
+        <div class="formula formula--green"><span class="formula__label">Area between curve and $x$-axis</span><span class="formula__eq">$A = \left|\int_a^b y\,dx\right|$</span></div>
+        <div class="callout callout--warn"><strong>If curve goes below $x$-axis:</strong> the integral gives a negative value. Split at $x$-intercepts and take absolute values of each part.</div>
+        <div class="example">
+          <div class="example__title">Example: area of $y=x(x-2)$ between $x=0$ and $x=2$</div>
+          <p class="step">Curve below $x$-axis in $[0,2]$.<br>
+          $\int_0^2 (x^2-2x)\,dx = \left[\frac{x^3}{3} - x^2\right]_0^2 = \frac{8}{3} - 4 = -\frac{4}{3}$<br>
+          Area $= \left|-\frac{4}{3}\right| = \frac{4}{3}$</p>
+        </div>
+        <div class="formula formula--cyan"><span class="formula__label">Area between two curves ($f$ above $g$)</span><span class="formula__eq">$A = \int_a^b [f(x) - g(x)]\,dx$</span></div>
+        <div class="example">
+          <div class="example__title">Steps for area between curves</div>
+          <p>1. Find intersection points (solve $f = g$)<br>
+          2. Determine which is on top in the interval<br>
+          3. Integrate (upper $-$ lower)</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Volume of Revolution &amp; Reverse Differentiation</h3>
+        <h4>Integration as Reverse Differentiation</h4>
+        <div class="example">
+          <div class="example__title">Example: $\frac{dy}{dx} = 3x^2 - 4$, passes through $(2, 5)$</div>
+          <p class="step">$y = \int (3x^2-4)\,dx = x^3 - 4x + C$<br>
+          At $(2,5)$: $5 = 8 - 8 + C \Rightarrow C = 5$<br>
+          $y = x^3 - 4x + 5$</p>
+        </div>
+        <h4>Volume of Revolution (about $x$-axis)</h4>
+        <div class="formula formula--pink"><span class="formula__eq">$V = \pi \int_a^b y^2\,dx$</span></div>
+        <div class="formula formula--teal"><span class="formula__label">About $y$-axis</span><span class="formula__eq">$V = \pi \int_c^d x^2\,dy$</span></div>
+        <div class="example">
+          <div class="example__title">Example: $y = \sqrt{x}$, from $x=0$ to $x=4$, about $x$-axis</div>
+          <p class="step">$V = \pi\int_0^4 (\sqrt{x})^2\,dx = \pi\int_0^4 x\,dx$<br>
+          $= \pi\left[\frac{x^2}{2}\right]_0^4 = \pi \cdot 8 = 8\pi$</p>
+        </div>
+        <div class="callout callout--danger"><strong>Common Mistake:</strong> Forgetting the $\pi$ in the volume formula! Also, make sure to square $y$ (not just integrate $y$).</div>
+      </div>
+
+      <div class="card">
+        <h3>Trapezium Rule</h3>
+        <div class="formula formula--amber"><span class="formula__label">With $n$ strips ($n+1$ ordinates)</span><span class="formula__eq">$\int_a^b y\,dx \approx \frac{h}{2}[y_0 + y_n + 2(y_1 + y_2 + \cdots + y_{n-1})]$<br>where $h = \frac{b-a}{n}$</span></div>
+        <div class="callout callout--rule"><strong>Memory:</strong> $\frac{h}{2} \times [\text{first} + \text{last} + 2(\text{all middle values})]$</div>
+        <div class="example">
+          <div class="example__title">Example: Estimate $\int_1^3 \sqrt{x}\,dx$ with 4 strips</div>
+          <p class="step">$h = \frac{3-1}{4} = 0.5$<br>
+          $x$: 1, 1.5, 2, 2.5, 3<br>
+          $y$: 1, 1.225, 1.414, 1.581, 1.732<br>
+          $\approx \frac{0.5}{2}[1 + 1.732 + 2(1.225 + 1.414 + 1.581)]$<br>
+          $= 0.25[2.732 + 2(4.220)]$<br>
+          $= 0.25[2.732 + 8.440] = 0.25 \times 11.172 = 2.793$</p>
+        </div>
+        <div class="callout callout--warn"><strong>Accuracy:</strong> More strips = better estimate. Overestimates for concave up ($\cup$), underestimates for concave down ($\cap$).</div>
+        <div class="callout callout--tip"><strong>Exam Tip:</strong> Set up a table of $x$ and $y$ values first, then apply the formula carefully. Don't rush this question — it's easy marks if you're systematic.</div>
+      </div>
+
+    </div>
+    </div>
+
+    </div><!-- /panel-group -->
+  </div><!-- /container -->
+</div>
+
+<script>
+  // Search/filter functionality
+  document.addEventListener('DOMContentLoaded', () => {
+    const searchInput = document.getElementById('formulaSearch');
+    if (!searchInput) return;
+
+    searchInput.addEventListener('input', (e) => {
+      const q = e.target.value.toLowerCase().trim();
+      const cards = document.querySelectorAll('.card');
+
+      if (!q) {
+        cards.forEach(c => c.style.display = '');
+        return;
+      }
+
+      cards.forEach(card => {
+        const text = card.textContent.toLowerCase();
+        card.style.display = text.includes(q) ? '' : 'none';
+      });
+    });
+  });
+</script>
+</body>
+</html>

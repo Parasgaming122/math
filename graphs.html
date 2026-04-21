@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Graph Plotter — P1 Math Ace</title>
+  <meta name="description" content="Interactive graph plotter for AS Level Pure Mathematics 1. Plot functions, explore transformations with live sliders.">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jsxgraph@1.8.0/distrib/jsxgraph.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jsxgraph@1.8.0/distrib/jsxgraphcore.js"></script>
+  <script defer src="js/main.js"></script>
+  <style>
+    .plotter-wrap { display:grid; grid-template-columns:1fr 340px; gap:20px; min-height:560px; }
+    .board-container { background:var(--bg-secondary); border:1px solid var(--border); border-radius:var(--radius-md); overflow:hidden; position:relative; min-height:500px; }
+    #jsxBoard { width:100%; height:100%; }
+    .sidebar { display:flex; flex-direction:column; gap:14px; }
+    .sidebar-section { background:var(--bg-secondary); border:1px solid var(--border); border-radius:var(--radius-md); padding:16px; }
+    .sidebar-section h3 { font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:.07em; color:var(--accent-blue); margin-bottom:10px; }
+    .eq-input-wrap { display:flex; gap:8px; margin-bottom:12px; }
+    .eq-input-wrap input { flex:1; padding:10px 14px; background:var(--bg-tertiary); border:1px solid var(--border); border-radius:var(--radius-sm); color:var(--text-primary); font-family:var(--font-mono); font-size:14px; outline:none; }
+    .eq-input-wrap input:focus { border-color:var(--accent-blue-dim); }
+    .graph-list { max-height:120px; overflow-y:auto; margin-bottom:8px; }
+    .graph-item { display:flex; align-items:center; justify-content:space-between; padding:6px 8px; border-radius:4px; font-family:var(--font-mono); font-size:12.5px; margin-bottom:4px; background:var(--bg-tertiary); }
+    .graph-item__color { width:12px; height:12px; border-radius:50%; margin-right:8px; flex-shrink:0; }
+    .graph-item__remove { background:none; border:none; color:var(--accent-red); font-size:16px; cursor:pointer; padding:2px 6px; line-height:1; }
+    .preset-grid { display:grid; grid-template-columns:1fr 1fr; gap:6px; }
+    .preset-btn { padding:7px 10px; text-align:left; background:var(--bg-tertiary); border:1px solid var(--border); border-radius:var(--radius-sm); color:var(--text-secondary); font-family:var(--font-mono); font-size:11.5px; cursor:pointer; transition:var(--transition); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .preset-btn:hover { background:var(--bg-elevated); border-color:var(--accent-blue-dim); color:var(--accent-blue); }
+    .slider-row { margin-bottom:10px; }
+    .slider-row label { display:flex; justify-content:space-between; font-size:12px; color:var(--text-muted); margin-bottom:3px; }
+    .slider-row label span { color:var(--accent-cyan); font-family:var(--font-mono); font-weight:500; }
+    .slider-row input[type="range"] { width:100%; accent-color:var(--accent-blue); height:4px; }
+    .coord-display { position:absolute; bottom:12px; left:12px; background:rgba(10,10,15,0.85); padding:6px 12px; border-radius:var(--radius-sm); font-family:var(--font-mono); font-size:12px; color:var(--accent-cyan); pointer-events:none; z-index:10; }
+    .ref-table { margin-top:12px; }
+    .ref-table table { font-size:11.5px; }
+    .ref-table td { font-family:var(--font-mono); font-size:11px; padding:4px 6px; }
+    .ref-table th { font-size:10px; padding:4px 6px; }
+    .controls-row { display:flex; gap:8px; margin-top:8px; }
+    @media(max-width:900px) {
+      .plotter-wrap { grid-template-columns:1fr; }
+      .board-container { min-height:400px; }
+    }
+  </style>
+</head>
+<body>
+<div class="page-wrapper">
+  <div class="container">
+    <div class="page-header">
+      <h1>Interactive Graph Plotter</h1>
+      <p>Type equations, explore transformations with live sliders, overlay multiple graphs</p>
+    </div>
+
+    <div class="plotter-wrap">
+      <!-- GRAPH CANVAS -->
+      <div class="board-container">
+        <div id="jsxBoard"></div>
+        <div class="coord-display" id="coordDisplay">Move cursor over graph</div>
+      </div>
+
+      <!-- SIDEBAR -->
+      <div class="sidebar">
+        <!-- EQUATION INPUT -->
+        <div class="sidebar-section">
+          <h3>Plot Equation</h3>
+          <div class="eq-input-wrap">
+            <input type="text" id="eqInput" placeholder="e.g. sin(x)" autofocus>
+            <button class="btn btn--primary btn--sm" onclick="addGraph()">Plot</button>
+          </div>
+          <div class="graph-list" id="graphList"></div>
+          <div class="controls-row">
+            <button class="btn btn--ghost btn--sm" onclick="clearAllGraphs()" style="flex:1">Clear All</button>
+            <button class="btn btn--ghost btn--sm" onclick="resetView()" style="flex:1">Reset View</button>
+          </div>
+        </div>
+
+        <!-- PRESETS -->
+        <div class="sidebar-section">
+          <h3>Preset Graphs</h3>
+          <div class="preset-grid">
+            <button class="preset-btn" onclick="loadPreset('sin(x)')">sin(x)</button>
+            <button class="preset-btn" onclick="loadPreset('cos(x)')">cos(x)</button>
+            <button class="preset-btn" onclick="loadPreset('tan(x)')">tan(x)</button>
+            <button class="preset-btn" onclick="loadPreset('x^2')">x²</button>
+            <button class="preset-btn" onclick="loadPreset('sin(2*x)')">sin(2x)</button>
+            <button class="preset-btn" onclick="loadPreset('2*sin(x)')">2sin(x)</button>
+            <button class="preset-btn" onclick="loadPreset('sin(x)+2')">sin(x)+2</button>
+            <button class="preset-btn" onclick="loadPreset('(x-2)^2+3')">(x-2)²+3</button>
+            <button class="preset-btn" onclick="loadPreset('abs(x)')">|x|</button>
+            <button class="preset-btn" onclick="loadPreset('abs(2*x-3)')">|2x-3|</button>
+            <button class="preset-btn" onclick="loadPreset('1/x')">1/x</button>
+            <button class="preset-btn" onclick="loadPreset('sqrt(x)')">√x</button>
+            <button class="preset-btn" onclick="loadPreset('x^3-3*x')">x³-3x</button>
+            <button class="preset-btn" onclick="loadPreset('exp(x)')">eˣ</button>
+            <button class="preset-btn" onclick="loadPreset('log(x)')">ln(x)</button>
+            <button class="preset-btn" onclick="loadPreset('-sin(x)')">-sin(x)</button>
+          </div>
+        </div>
+
+        <!-- TRANSFORMATION SLIDERS -->
+        <div class="sidebar-section">
+          <h3>Transformation: $a \cdot f(b(x+c)) + d$</h3>
+          <p style="font-size:11px; color:var(--text-muted); margin-bottom:10px;">Base function uses the first plotted graph</p>
+          <div class="slider-row">
+            <label>a (vertical stretch) <span id="valA">1</span></label>
+            <input type="range" id="sliderA" min="-3" max="3" step="0.1" value="1" oninput="updateTransform()">
+          </div>
+          <div class="slider-row">
+            <label>b (horizontal stretch) <span id="valB">1</span></label>
+            <input type="range" id="sliderB" min="0.1" max="4" step="0.1" value="1" oninput="updateTransform()">
+          </div>
+          <div class="slider-row">
+            <label>c (horizontal shift) <span id="valC">0</span></label>
+            <input type="range" id="sliderC" min="-5" max="5" step="0.1" value="0" oninput="updateTransform()">
+          </div>
+          <div class="slider-row">
+            <label>d (vertical shift) <span id="valD">0</span></label>
+            <input type="range" id="sliderD" min="-5" max="5" step="0.1" value="0" oninput="updateTransform()">
+          </div>
+          <p id="transformDesc" style="font-size:11.5px; color:var(--accent-teal); font-family:var(--font-mono); margin-top:4px;"></p>
+        </div>
+
+        <!-- REFERENCE -->
+        <div class="sidebar-section ref-table">
+          <h3>Quick Reference</h3>
+          <table>
+            <tr><th>Transform</th><th>Effect</th></tr>
+            <tr><td>f(x)+d</td><td>Up by d</td></tr>
+            <tr><td>f(x+c)</td><td>Left by c</td></tr>
+            <tr><td>a·f(x)</td><td>Stretch vert. ×a</td></tr>
+            <tr><td>f(bx)</td><td>Stretch horiz. ×1/b</td></tr>
+            <tr><td>−f(x)</td><td>Reflect in x-axis</td></tr>
+            <tr><td>f(−x)</td><td>Reflect in y-axis</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  const COLORS = ['#4a9eff','#4ade80','#ef4444','#f59e0b','#ec4899','#22d3ee','#a78bfa','#fb923c'];
+  let board, graphs = [], transformCurve = null, colorIdx = 0;
+
+  function initBoard() {
+    board = JXG.JSXGraph.initBoard('jsxBoard', {
+      boundingbox: [-8, 6, 8, -6],
+      axis: true,
+      grid: true,
+      showCopyright: false,
+      showNavigation: true,
+      pan: { enabled: true },
+      zoom: { wheel: true, needShift: false },
+      defaultAxes: {
+        x: { strokeColor: '#555', highlightStrokeColor: '#555', ticks: { strokeColor: '#444', minorTicks: 0, label: { fontSize: 11, cssStyle: 'color:#888' } } },
+        y: { strokeColor: '#555', highlightStrokeColor: '#555', ticks: { strokeColor: '#444', minorTicks: 0, label: { fontSize: 11, cssStyle: 'color:#888' } } }
+      }
+    });
+
+    // Coordinate display
+    board.on('mousemove', function(e) {
+      const coords = board.getUsrCoordsOfMouse(e);
+      document.getElementById('coordDisplay').textContent =
+        `(${coords[0].toFixed(2)}, ${coords[1].toFixed(2)})`;
+    });
+  }
+
+  function parseExpr(expr) {
+    // Convert friendly syntax to JS math
+    let e = expr
+      .replace(/\^/g, '**')
+      .replace(/sin/g, 'Math.sin')
+      .replace(/cos/g, 'Math.cos')
+      .replace(/tan/g, 'Math.tan')
+      .replace(/sqrt/g, 'Math.sqrt')
+      .replace(/abs/g, 'Math.abs')
+      .replace(/exp/g, 'Math.exp')
+      .replace(/log/g, 'Math.log')
+      .replace(/ln/g, 'Math.log')
+      .replace(/pi/gi, 'Math.PI')
+      .replace(/π/g, 'Math.PI');
+    return e;
+  }
+
+  window.addGraph = function(expr) {
+    expr = expr || document.getElementById('eqInput').value.trim();
+    if (!expr) return;
+
+    const jsExpr = parseExpr(expr);
+    const color = COLORS[colorIdx % COLORS.length];
+    colorIdx++;
+
+    try {
+      // Test the expression
+      const testFn = new Function('x', `return ${jsExpr};`);
+      testFn(1);
+
+      const fn = new Function('x', `try { const v = ${jsExpr}; return isFinite(v) ? v : NaN; } catch(e) { return NaN; }`);
+      const curve = board.create('functiongraph', [fn, -20, 20], {
+        strokeColor: color,
+        strokeWidth: 2,
+        highlight: false
+      });
+
+      graphs.push({ expr, jsExpr, curve, color, fn });
+      updateGraphList();
+      document.getElementById('eqInput').value = '';
+    } catch(e) {
+      alert('Invalid expression: ' + expr + '\nTry something like: sin(x), x^2, abs(x)');
+    }
+  };
+
+  window.loadPreset = function(expr) {
+    document.getElementById('eqInput').value = expr;
+    addGraph(expr);
+  };
+
+  window.removeGraph = function(idx) {
+    board.removeObject(graphs[idx].curve);
+    graphs.splice(idx, 1);
+    updateGraphList();
+    updateTransform();
+  };
+
+  window.clearAllGraphs = function() {
+    graphs.forEach(g => board.removeObject(g.curve));
+    graphs = [];
+    colorIdx = 0;
+    if (transformCurve) { board.removeObject(transformCurve); transformCurve = null; }
+    updateGraphList();
+  };
+
+  window.resetView = function() {
+    board.setBoundingBox([-8, 6, 8, -6], true);
+  };
+
+  function updateGraphList() {
+    const list = document.getElementById('graphList');
+    list.innerHTML = graphs.map((g, i) => `
+      <div class="graph-item">
+        <span style="display:flex;align-items:center;gap:6px;overflow:hidden;">
+          <span class="graph-item__color" style="background:${g.color}"></span>
+          <span style="overflow:hidden;text-overflow:ellipsis;">${g.expr}</span>
+        </span>
+        <button class="graph-item__remove" onclick="removeGraph(${i})" title="Remove">&times;</button>
+      </div>
+    `).join('');
+  }
+
+  window.updateTransform = function() {
+    const a = parseFloat(document.getElementById('sliderA').value);
+    const b = parseFloat(document.getElementById('sliderB').value);
+    const c = parseFloat(document.getElementById('sliderC').value);
+    const d = parseFloat(document.getElementById('sliderD').value);
+
+    document.getElementById('valA').textContent = a;
+    document.getElementById('valB').textContent = b;
+    document.getElementById('valC').textContent = c;
+    document.getElementById('valD').textContent = d;
+
+    // Build description
+    let desc = [];
+    if (a !== 1) desc.push(a === -1 ? 'Reflect in x-axis' : `Vert. stretch ×${Math.abs(a)}`);
+    if (b !== 1) desc.push(`Horiz. stretch ×${(1/b).toFixed(2)}`);
+    if (c !== 0) desc.push(c > 0 ? `Left ${c}` : `Right ${Math.abs(c)}`);
+    if (d !== 0) desc.push(d > 0 ? `Up ${d}` : `Down ${Math.abs(d)}`);
+    document.getElementById('transformDesc').textContent = desc.join(', ') || 'No transformation';
+
+    if (transformCurve) {
+      board.removeObject(transformCurve);
+      transformCurve = null;
+    }
+
+    if (graphs.length === 0) return;
+
+    const baseFn = graphs[0].fn;
+    const transformedFn = function(x) {
+      try {
+        const v = a * baseFn(b * (x + c)) + d;
+        return isFinite(v) ? v : NaN;
+      } catch(e) { return NaN; }
+    };
+
+    transformCurve = board.create('functiongraph', [transformedFn, -20, 20], {
+      strokeColor: '#a78bfa',
+      strokeWidth: 2,
+      dash: 2,
+      highlight: false
+    });
+  };
+
+  // Enter key to plot
+  document.addEventListener('DOMContentLoaded', () => {
+    initBoard();
+    document.getElementById('eqInput').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') addGraph();
+    });
+  });
+})();
+</script>
+</body>
+</html>

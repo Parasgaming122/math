@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Practice Questions — P1 Math Ace</title>
+  <meta name="description" content="30+ practice questions with hints and step-by-step solutions for Cambridge AS Level Pure Mathematics 1.">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script defer src="js/main.js"></script>
+  <style>
+    .stats-bar { display:flex; gap:16px; flex-wrap:wrap; margin-bottom:28px; align-items:center; }
+    .stat-chip { background:var(--bg-secondary); border:1px solid var(--border); border-radius:var(--radius-sm); padding:8px 16px; font-size:13px; }
+    .stat-chip strong { color:var(--accent-blue); font-family:var(--font-mono); }
+    .topic-progress { display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:10px; margin-bottom:32px; }
+    .tp-card { background:var(--bg-secondary); border:1px solid var(--border); border-radius:var(--radius-sm); padding:12px 14px; }
+    .tp-card__name { font-size:12px; font-weight:600; margin-bottom:4px; }
+    .tp-card__bar { height:4px; background:var(--bg-tertiary); border-radius:2px; overflow:hidden; margin-bottom:3px; }
+    .tp-card__fill { height:100%; border-radius:2px; background:var(--accent-blue); transition:width 0.4s ease; }
+    .tp-card__count { font-size:10px; color:var(--text-muted); }
+    .q-filter { display:flex; gap:4px; flex-wrap:wrap; margin-bottom:24px; }
+    .q-filter .tab { padding:7px 14px; border-radius:20px; border:1px solid var(--border); font-size:12px; }
+    .q-filter .tab.active { background:var(--accent-blue); color:#fff; border-color:var(--accent-blue); }
+    .q-section { margin-bottom:32px; }
+    .q-section h2 { font-size:17px; font-weight:600; margin-bottom:14px; }
+    .question { background:var(--bg-secondary); border:1px solid var(--border); border-radius:var(--radius-md); padding:20px; margin-bottom:14px; }
+    .question__head { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; flex-wrap:wrap; gap:8px; }
+    .question__id { font-size:12px; font-weight:600; color:var(--text-muted); }
+    .question__text { font-size:14.5px; line-height:1.75; margin-bottom:14px; }
+    .question__btns { display:flex; gap:8px; flex-wrap:wrap; }
+    .question__hint, .question__solution { display:none; margin-top:14px; padding-top:14px; border-top:1px solid var(--border); animation:fadeIn 0.3s ease; }
+    .question__hint.show, .question__solution.show { display:block; }
+    .question__hint { color:var(--accent-amber); font-size:13.5px; }
+    .solution-step { font-family:var(--font-mono); font-size:13px; line-height:1.9; color:var(--text-primary); margin-top:6px; }
+    .done-btn { background:none; border:1px solid var(--border); border-radius:4px; padding:4px 10px; font-size:11px; color:var(--text-muted); cursor:pointer; transition:var(--transition); }
+    .done-btn.completed { background:rgba(74,222,128,0.1); border-color:rgba(74,222,128,0.3); color:var(--accent-green); }
+  </style>
+</head>
+<body>
+<div class="page-wrapper">
+  <div class="container">
+    <div class="page-header" style="display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:12px;">
+      <div>
+        <h1>Practice Questions</h1>
+        <p>30+ questions with hints &amp; step-by-step solutions</p>
+      </div>
+      <button class="btn btn--primary btn--sm" onclick="randomQuestion()">Random Question</button>
+    </div>
+
+    <!-- STATS -->
+    <div class="stats-bar" id="statsBar">
+      <div class="stat-chip">Completed: <strong id="statDone">0</strong> / <strong id="statTotal">0</strong></div>
+    </div>
+
+    <!-- TOPIC PROGRESS -->
+    <div class="topic-progress" id="topicProgress"></div>
+
+    <!-- FILTER -->
+    <div class="q-filter">
+      <button class="tab active" onclick="filterQ('all',this)">All Topics</button>
+      <button class="tab" onclick="filterQ('quadratics',this)">Quadratics</button>
+      <button class="tab" onclick="filterQ('functions',this)">Functions</button>
+      <button class="tab" onclick="filterQ('coord',this)">Coord Geom</button>
+      <button class="tab" onclick="filterQ('circular',this)">Circular</button>
+      <button class="tab" onclick="filterQ('trig',this)">Trig</button>
+      <button class="tab" onclick="filterQ('series',this)">Series</button>
+      <button class="tab" onclick="filterQ('diff',this)">Differentiation</button>
+      <button class="tab" onclick="filterQ('integ',this)">Integration</button>
+    </div>
+
+    <!-- QUESTIONS -->
+    <div id="questionsContainer"></div>
+  </div>
+</div>
+
+<script>
+const QUESTIONS = [
+  // QUADRATICS
+  { id:'q1', topic:'quadratics', diff:'easy', text:'Express $2x^2 + 12x + 7$ in the form $a(x+p)^2 + q$.', hint:'Factor out the coefficient of $x^2$ first, then complete the square inside the bracket.', solution:'$2x^2 + 12x + 7$\n$= 2(x^2 + 6x) + 7$\n$= 2[(x+3)^2 - 9] + 7$\n$= 2(x+3)^2 - 18 + 7$\n$= 2(x+3)^2 - 11$\n\nSo $a=2$, $p=3$, $q=-11$.' },
+  { id:'q2', topic:'quadratics', diff:'medium', text:'The equation $kx^2 + 8x + (k+6) = 0$ has two equal roots. Find the possible values of $k$.', hint:'For equal roots, discriminant $\\Delta = 0$. Use $b^2 - 4ac = 0$.', solution:'$\\Delta = 64 - 4k(k+6) = 0$\n$64 - 4k^2 - 24k = 0$\n$4k^2 + 24k - 64 = 0$\n$k^2 + 6k - 16 = 0$\n$(k+8)(k-2) = 0$\n$k = -8$ or $k = 2$' },
+  { id:'q3', topic:'quadratics', diff:'hard', text:'Solve the inequality $2x^2 - 7x + 3 > 0$.', hint:'Factorise the quadratic, find the roots, then sketch the parabola to determine where it is positive.', solution:'$2x^2 - 7x + 3 = (2x-1)(x-3) = 0$\nRoots: $x = \\frac{1}{2}$ and $x = 3$\n\nSince $a > 0$ (opens up), the parabola is positive outside the roots:\n$x < \\frac{1}{2}$ or $x > 3$' },
+  { id:'q4', topic:'quadratics', diff:'medium', text:'Find the range of values of $m$ for which the line $y = mx + 1$ does not intersect the curve $y = x^2 + 2x + 3$.', hint:'Set equal, rearrange to standard form, then use $\\Delta < 0$ for no intersection.', solution:'$mx + 1 = x^2 + 2x + 3$\n$x^2 + (2-m)x + 2 = 0$\n\nNo intersection: $\\Delta < 0$\n$(2-m)^2 - 4(1)(2) < 0$\n$4 - 4m + m^2 - 8 < 0$\n$m^2 - 4m - 4 < 0$\n\nUsing the formula: $m = \\frac{4 \\pm \\sqrt{16+16}}{2} = 2 \\pm 2\\sqrt{2}$\n\n$2 - 2\\sqrt{2} < m < 2 + 2\\sqrt{2}$' },
+
+  // FUNCTIONS
+  { id:'q5', topic:'functions', diff:'easy', text:'Given $f(x) = 3x - 2$ and $g(x) = x^2 + 1$, find $fg(3)$.', hint:'First find $g(3)$, then apply $f$ to that result.', solution:'$g(3) = 9 + 1 = 10$\n$fg(3) = f(10) = 3(10) - 2 = 28$' },
+  { id:'q6', topic:'functions', diff:'medium', text:'Find $f^{-1}(x)$ where $f(x) = \\frac{2x+5}{x-3}$, $x \\neq 3$. State the domain of $f^{-1}$.', hint:'Let $y = f(x)$, make $x$ the subject, then swap $x$ and $y$.', solution:'$y = \\frac{2x+5}{x-3}$\n$y(x-3) = 2x+5$\n$xy - 3y = 2x + 5$\n$xy - 2x = 3y + 5$\n$x(y-2) = 3y+5$\n$x = \\frac{3y+5}{y-2}$\n\n$f^{-1}(x) = \\frac{3x+5}{x-2}$, domain: $x \\neq 2$' },
+  { id:'q7', topic:'functions', diff:'hard', text:'Solve $|3x - 2| = |x + 4|$.', hint:'Square both sides to eliminate both modulus signs.', solution:'$(3x-2)^2 = (x+4)^2$\n$9x^2 - 12x + 4 = x^2 + 8x + 16$\n$8x^2 - 20x - 12 = 0$\n$2x^2 - 5x - 3 = 0$\n$(2x+1)(x-3) = 0$\n$x = -\\frac{1}{2}$ or $x = 3$' },
+  { id:'q8', topic:'functions', diff:'medium', text:'The function $f(x) = x^2 - 4x + 7$ has domain $x \\geq k$. Find the smallest value of $k$ for which $f$ has an inverse.', hint:'Complete the square to find the vertex. The function must be one-to-one.', solution:'$f(x) = (x-2)^2 + 3$\nVertex at $x = 2$.\n\nFor $f$ to be one-to-one, we need the domain to start at the vertex:\n$k = 2$\n\n(With $x \\geq 2$, the function is strictly increasing → one-to-one → inverse exists.)' },
+
+  // COORDINATE GEOMETRY
+  { id:'q9', topic:'coord', diff:'easy', text:'Find the equation of the line through $(1, 5)$ and $(3, 11)$.', hint:'Find gradient first using $m = \\frac{y_2-y_1}{x_2-x_1}$, then use point-slope form.', solution:'$m = \\frac{11-5}{3-1} = \\frac{6}{2} = 3$\n$y - 5 = 3(x - 1)$\n$y = 3x + 2$' },
+  { id:'q10', topic:'coord', diff:'medium', text:'Find the centre and radius of the circle $x^2 + y^2 - 6x + 4y - 12 = 0$.', hint:'Complete the square for $x$ and $y$ separately.', solution:'$(x^2 - 6x) + (y^2 + 4y) = 12$\n$(x-3)^2 - 9 + (y+2)^2 - 4 = 12$\n$(x-3)^2 + (y+2)^2 = 25$\n\nCentre: $(3, -2)$, Radius: $5$' },
+  { id:'q11', topic:'coord', diff:'hard', text:'The line $y = 2x + k$ is tangent to the circle $(x-3)^2 + (y-1)^2 = 5$. Find the values of $k$.', hint:'Substitute the line into the circle equation, then set $\\Delta = 0$ for tangency.', solution:'Substitute $y = 2x+k$:\n$(x-3)^2 + (2x+k-1)^2 = 5$\n$x^2 - 6x + 9 + 4x^2 + 4x(k-1) + (k-1)^2 = 5$\n$5x^2 + (4k-10)x + (k-1)^2 + 4 = 0$\n\n$\\Delta = 0$:\n$(4k-10)^2 - 4(5)((k-1)^2+4) = 0$\n$16k^2 - 80k + 100 - 20k^2 + 40k - 20 - 80 = 0$\n$-4k^2 - 40k + 0 = 0$... \n\nAlternatively: distance from centre to line = radius.\nLine: $2x - y + k = 0$, centre $(3,1)$, $r = \\sqrt{5}$\n$\\frac{|2(3) - 1 + k|}{\\sqrt{4+1}} = \\sqrt{5}$\n$\\frac{|5+k|}{\\sqrt{5}} = \\sqrt{5}$\n$|5+k| = 5$\n$k = 0$ or $k = -10$' },
+
+  // CIRCULAR MEASURE
+  { id:'q12', topic:'circular', diff:'easy', text:'Convert $150°$ to radians. Give your answer in terms of $\\pi$.', hint:'Multiply by $\\frac{\\pi}{180}$.', solution:'$150° \\times \\frac{\\pi}{180} = \\frac{150\\pi}{180} = \\frac{5\\pi}{6}$' },
+  { id:'q13', topic:'circular', diff:'medium', text:'A sector has radius 6 cm and angle $\\frac{2\\pi}{3}$ radians. Find the area of the segment.', hint:'Segment area = Sector area − Triangle area. Use $A = \\frac{1}{2}r^2(\\theta - \\sin\\theta)$.', solution:'$A = \\frac{1}{2}(6)^2\\left(\\frac{2\\pi}{3} - \\sin\\frac{2\\pi}{3}\\right)$\n$= 18\\left(\\frac{2\\pi}{3} - \\frac{\\sqrt{3}}{2}\\right)$\n$= 12\\pi - 9\\sqrt{3}$\n$\\approx 37.70 - 15.59 = 22.1$ cm²' },
+  { id:'q14', topic:'circular', diff:'hard', text:'The perimeter of a sector is 20 cm. Show that the area is maximised when the radius is 5 cm and find this maximum area.', hint:'Express $\\theta$ in terms of $r$ using the perimeter formula, substitute into area formula, then differentiate.', solution:'Perimeter: $2r + r\\theta = 20$\n$\\theta = \\frac{20-2r}{r}$\n\nArea: $A = \\frac{1}{2}r^2\\theta = \\frac{1}{2}r^2 \\cdot \\frac{20-2r}{r} = \\frac{r(20-2r)}{2} = 10r - r^2$\n\n$\\frac{dA}{dr} = 10 - 2r = 0 \\Rightarrow r = 5$\n$\\frac{d^2A}{dr^2} = -2 < 0$ → maximum\n\nMax area $= 10(5) - 25 = 25$ cm²' },
+
+  // TRIGONOMETRY
+  { id:'q15', topic:'trig', diff:'easy', text:'Solve $\\sin x = \\frac{\\sqrt{3}}{2}$ for $0° \\leq x \\leq 360°$.', hint:'$\\sin 60° = \\frac{\\sqrt{3}}{2}$. Use CAST to find all solutions.', solution:'Principal value: $x = 60°$\n$\\sin$ is positive in Q1 and Q2.\n$x = 60°$ or $x = 180° - 60° = 120°$' },
+  { id:'q16', topic:'trig', diff:'medium', text:'Solve $2\\cos^2\\theta - \\cos\\theta - 1 = 0$ for $0° \\leq \\theta \\leq 360°$.', hint:'Let $u = \\cos\\theta$ and solve the resulting quadratic.', solution:'Let $u = \\cos\\theta$:\n$2u^2 - u - 1 = 0$\n$(2u+1)(u-1) = 0$\n$u = -\\frac{1}{2}$ or $u = 1$\n\n$\\cos\\theta = -\\frac{1}{2}$: $\\theta = 120°, 240°$\n$\\cos\\theta = 1$: $\\theta = 0°, 360°$\n\nSolutions: $\\theta = 0°, 120°, 240°, 360°$' },
+  { id:'q17', topic:'trig', diff:'hard', text:'Express $5\\sin\\theta - 12\\cos\\theta$ in the form $R\\sin(\\theta - \\alpha)$ and hence find the maximum value.', hint:'$R = \\sqrt{a^2+b^2}$ and $\\tan\\alpha = \\frac{b}{a}$ where the expression is $a\\sin\\theta - b\\cos\\theta$.', solution:'$5\\sin\\theta - 12\\cos\\theta = R\\sin(\\theta - \\alpha)$\nExpanding: $R\\cos\\alpha\\sin\\theta - R\\sin\\alpha\\cos\\theta$\n\n$R\\cos\\alpha = 5$, $R\\sin\\alpha = 12$\n$R = \\sqrt{25+144} = \\sqrt{169} = 13$\n$\\tan\\alpha = \\frac{12}{5} \\Rightarrow \\alpha = 67.4°$\n\n$= 13\\sin(\\theta - 67.4°)$\nMaximum value $= 13$ (when $\\sin(\\theta - 67.4°) = 1$)' },
+  { id:'q18', topic:'trig', diff:'medium', text:'Solve $\\tan 2x = \\sqrt{3}$ for $0° \\leq x \\leq 180°$.', hint:'First solve for $2x$, remembering to adjust the range: $0° \\leq 2x \\leq 360°$.', solution:'$\\tan 2x = \\sqrt{3}$\nRange for $2x$: $0° \\leq 2x \\leq 360°$\n$2x = 60°, 240°$\n$x = 30°, 120°$' },
+
+  // SERIES
+  { id:'q19', topic:'series', diff:'easy', text:'Find the 20th term of the AP: 5, 8, 11, 14, ...', hint:'$u_n = a + (n-1)d$', solution:'$a = 5$, $d = 3$, $n = 20$\n$u_{20} = 5 + 19(3) = 5 + 57 = 62$' },
+  { id:'q20', topic:'series', diff:'medium', text:'A GP has first term 3 and common ratio $\\frac{2}{3}$. Find $S_\\infty$.', hint:'Use $S_\\infty = \\frac{a}{1-r}$. Check that $|r| < 1$.', solution:'$|r| = \\frac{2}{3} < 1$ → converges.\n$S_\\infty = \\frac{3}{1 - \\frac{2}{3}} = \\frac{3}{\\frac{1}{3}} = 9$' },
+  { id:'q21', topic:'series', diff:'hard', text:'Find the coefficient of $x^3$ in the expansion of $(2 - 3x)^7$.', hint:'Use $T_{r+1} = \\binom{n}{r} a^{n-r} b^r$. Find the value of $r$ that gives $x^3$.', solution:'$T_{r+1} = \\binom{7}{r}(2)^{7-r}(-3x)^r = \\binom{7}{r} \\cdot 2^{7-r} \\cdot (-3)^r \\cdot x^r$\n\nFor $x^3$: $r = 3$\n$T_4 = \\binom{7}{3} \\cdot 2^4 \\cdot (-3)^3$\n$= 35 \\cdot 16 \\cdot (-27)$\n$= -15120$\n\nCoefficient of $x^3$ is $-15120$.' },
+  { id:'q22', topic:'series', diff:'medium', text:'Find the term independent of $x$ in $\\left(x^2 + \\frac{2}{x}\\right)^6$.', hint:'Write general term, collect powers of $x$, set total power = 0.', solution:'$T_{r+1} = \\binom{6}{r}(x^2)^{6-r}\\left(\\frac{2}{x}\\right)^r$\n$= \\binom{6}{r} \\cdot 2^r \\cdot x^{12-2r} \\cdot x^{-r}$\n$= \\binom{6}{r} \\cdot 2^r \\cdot x^{12-3r}$\n\nFor constant: $12 - 3r = 0 \\Rightarrow r = 4$\n$T_5 = \\binom{6}{4} \\cdot 2^4 = 15 \\cdot 16 = 240$' },
+
+  // DIFFERENTIATION
+  { id:'q23', topic:'diff', diff:'easy', text:'Differentiate $y = 3x^4 - 2x^3 + 5x - 7$.', hint:'Apply the power rule term by term.', solution:'$\\frac{dy}{dx} = 12x^3 - 6x^2 + 5$' },
+  { id:'q24', topic:'diff', diff:'medium', text:'Find the equation of the tangent to $y = x^3 - 3x^2 + 2$ at the point where $x = 1$.', hint:'Find $y(1)$ and $y\'(1)$ first, then use point-slope form.', solution:'$y(1) = 1 - 3 + 2 = 0$ → point $(1, 0)$\n$y\' = 3x^2 - 6x$\n$y\'(1) = 3 - 6 = -3$\n\nTangent: $y - 0 = -3(x - 1)$\n$y = -3x + 3$' },
+  { id:'q25', topic:'diff', diff:'hard', text:'A container has volume $V = \\frac{2000}{r} + \\pi r^2$. Find the value of $r$ that minimises $V$.', hint:'Differentiate $V$ with respect to $r$, set $= 0$, and verify it is a minimum.', solution:'$\\frac{dV}{dr} = -\\frac{2000}{r^2} + 2\\pi r = 0$\n$2\\pi r = \\frac{2000}{r^2}$\n$2\\pi r^3 = 2000$\n$r^3 = \\frac{1000}{\\pi}$\n$r = \\left(\\frac{1000}{\\pi}\\right)^{1/3} \\approx 6.83$\n\n$\\frac{d^2V}{dr^2} = \\frac{4000}{r^3} + 2\\pi > 0$ → minimum ✓' },
+  { id:'q26', topic:'diff', diff:'medium', text:'Find the coordinates of the stationary points of $y = 2x^3 + 3x^2 - 12x + 1$ and determine their nature.', hint:'Set $y\' = 0$ to find stat points. Use $y\'\'$ to classify.', solution:'$y\' = 6x^2 + 6x - 12 = 6(x^2+x-2) = 6(x+2)(x-1)$\n$x = -2$ or $x = 1$\n\n$y(-2) = -16 + 12 + 24 + 1 = 21$ → $(-2, 21)$\n$y(1) = 2 + 3 - 12 + 1 = -6$ → $(1, -6)$\n\n$y\'\' = 12x + 6$\n$y\'\'(-2) = -18 < 0$ → maximum at $(-2, 21)$\n$y\'\'(1) = 18 > 0$ → minimum at $(1, -6)$' },
+
+  // INTEGRATION
+  { id:'q27', topic:'integ', diff:'easy', text:'Find $\\int (4x^3 + 6x - 2)\\,dx$.', hint:'Apply the power rule term by term. Don\'t forget $+C$!', solution:'$\\int (4x^3 + 6x - 2)\\,dx = x^4 + 3x^2 - 2x + C$' },
+  { id:'q28', topic:'integ', diff:'medium', text:'Evaluate $\\int_0^2 (3x^2 - 4x + 1)\\,dx$.', hint:'Integrate, then substitute the limits and subtract.', solution:'$\\int_0^2 (3x^2-4x+1)\\,dx = \\left[x^3 - 2x^2 + x\\right]_0^2$\n$= (8 - 8 + 2) - (0)$\n$= 2$' },
+  { id:'q29', topic:'integ', diff:'hard', text:'Find the area enclosed between $y = x^2$ and $y = 4x - x^2$.', hint:'Find intersection points, determine which curve is on top, then integrate (upper − lower).', solution:'Intersection: $x^2 = 4x - x^2$\n$2x^2 - 4x = 0 \\Rightarrow 2x(x-2) = 0$\n$x = 0$ or $x = 2$\n\nFor $0 < x < 2$: $4x-x^2 > x^2$ ✓\n\n$A = \\int_0^2 [(4x-x^2) - x^2]\\,dx = \\int_0^2 (4x-2x^2)\\,dx$\n$= \\left[2x^2 - \\frac{2x^3}{3}\\right]_0^2$\n$= 8 - \\frac{16}{3} = \\frac{8}{3}$' },
+  { id:'q30', topic:'integ', diff:'medium', text:'The curve $y = \\sqrt{x}$ is rotated $360°$ about the $x$-axis between $x = 1$ and $x = 4$. Find the volume generated.', hint:'Use $V = \\pi\\int y^2\\,dx$. Remember $(\\sqrt{x})^2 = x$.', solution:'$V = \\pi\\int_1^4 (\\sqrt{x})^2\\,dx = \\pi\\int_1^4 x\\,dx$\n$= \\pi\\left[\\frac{x^2}{2}\\right]_1^4$\n$= \\pi\\left(8 - \\frac{1}{2}\\right) = \\frac{15\\pi}{2}$' },
+  { id:'q46', topic:'integ', diff:'hard', text:'Find the volume of the solid generated when the region bounded by $y = \\frac{1}{x}, y = 0, x = 1$ and $x = 2$ is rotated $360°$ about the $x$-axis.', hint:'Use $V = \\pi \\int_1^2 y^2 \\, dx$.', solution:'$V = \\pi \\int_1^2 (\\frac{1}{x})^2 \\, dx = \\pi \\int_1^2 x^{-2} \\, dx = \\pi [-x^{-1}]_1^2$\n$= \\pi [-\\frac{1}{x}]_1^2 = \\pi (-\\frac{1}{2} - (-1)) = \\frac{\\pi}{2}$ cubic units' },
+
+  // MORE QUESTIONS (TOTAL 66)
+  { id:'q47', topic:'quadratics', diff:'medium', text:'Find the coordinates of the vertex of the parabola $y = 3x^2 - 12x + 16$.', hint:'Complete the square or use $x = -b/2a$.', solution:'$x = -(-12)/(2 \\times 3) = 12/6 = 2$\n$y = 3(2^2) - 12(2) + 16 = 12 - 24 + 16 = 4$\nVertex: $(2, 4)$' },
+  { id:'q48', topic:'functions', diff:'easy', text:'Find the range of $f(x) = x^2 + 5$ for the domain $-2 \\leq x \\leq 3$.', hint:'Find the minimum and maximum values of the function over the given interval.', solution:'At $x=0$ (vertex), $f(0)=5$ (minimum).\nAt $x=-2$, $f(-2)=9$.\nAt $x=3$, $f(3)=14$ (maximum).\nRange: $5 \\leq f(x) \\leq 14$' },
+  { id:'q49', topic:'functions', diff:'hard', text:'The function $f$ is defined by $f(x) = \\frac{1}{x-1}$ for $x > 1$. Find $f(f(x))$ in its simplest form.', hint:'Substitute the expression for $f(x)$ into itself.', solution:'$f(f(x)) = \\frac{1}{\\frac{1}{x-1} - 1} = \\frac{1}{\\frac{1 - (x-1)}{x-1}} = \\frac{x-1}{2-x}$' },
+  { id:'q50', topic:'coord', diff:'medium', text:'Find the point of intersection of the lines $y = 2x + 1$ and $3x + y = 11$.', hint:'Solve the equations simultaneously.', solution:'Substitute $y$: $3x + (2x + 1) = 11 \\Rightarrow 5x = 10 \\Rightarrow x = 2$\n$y = 2(2) + 1 = 5$\nIntersection: $(2, 5)$' },
+  { id:'q51', topic:'coord', diff:'hard', text:'Show that the distance between the parallel lines $y = x + 2$ and $y = x + 4$ is $\\sqrt{2}$.', hint:'Find a point on one line and use the distance formula to the other line.', solution:'Point on $y=x+2$ is $(0, 2)$.\nDistance to $x-y+4=0$: $d = \\frac{|(0) - (2) + 4|}{\\sqrt{1^2 + (-1)^2}} = \\frac{2}{\\sqrt{2}} = \\sqrt{2}$' },
+  { id:'q52', topic:'circular', diff:'easy', text:'A circle has a diameter of 12 cm. Find the area of a sector with an arc length of 4 cm.', hint:'Find $r$ first, then use $s = r\\theta$ to find $\\theta$, then $A = \\frac{1}{2}r^2\\theta$.', solution:'$r = 6$ cm. $4 = 6\\theta \\Rightarrow \\theta = 2/3$ rad.\n$A = \\frac{1}{2}(6^2)(2/3) = 18(2/3) = 12$ cm²' },
+  { id:'q53', topic:'circular', diff:'hard', text:'Find the angle $\\theta$ (in radians) of a sector where the area is numerically equal to its perimeter, given radius $r=4$.', hint:'Set $Area = Perimeter$ and solve for $\\theta$.', solution:'$Area = \\frac{1}{2}(4^2)\\theta = 8\\theta$\n$Perimeter = 2(4) + 4\\theta = 8 + 4\\theta$\n$8\\theta = 8 + 4\\theta \\Rightarrow 4\\theta = 8 \\Rightarrow \\theta = 2$ rad' },
+  { id:'q54', topic:'trig', diff:'medium', text:'Prove that $\\tan x + \\cot x = \\sec x \\csc x$.', hint:'Write $\\tan$ and $\\cot$ in terms of $\\sin$ and $\\cos$.', solution:'LHS: $\\frac{\\sin x}{\\cos x} + \\frac{\\cos x}{\\sin x} = \\frac{\\sin^2 x + \\cos^2 x}{\\sin x \\cos x} = \\frac{1}{\\sin x \\cos x} = \\sec x \\csc x = \\text{RHS}$' },
+  { id:'q55', topic:'trig', diff:'hard', text:'Solve $2\\cos(2x - 30°) = -1$ for $0° \\leq x \\leq 180°$.', hint:'Solve for $2x-30°$ first, adjusting the range to $-30° \\leq 2x-30° \\leq 330°$.', solution:'$\\cos(2x-30°) = -0.5$\n$2x-30° = 120°, 240°$\n$2x = 150°, 270°$\n$x = 75°, 135°$' },
+  { id:'q56', topic:'series', diff:'medium', text:'Find the sum of all integers between 1 and 100 that are divisible by 3.', hint:'This is an AP: 3, 6, 9, ..., 99.', solution:'$a=3, d=3, L=99$. $99 = 3 + (n-1)3 \\Rightarrow n=33$\n$S_{33} = \\frac{33}{2}(3+99) = \\frac{33}{2}(102) = 33 \\times 51 = 1683$' },
+  { id:'q57', topic:'series', diff:'hard', text:'In the expansion of $(1 + ax)^6$, the coefficient of $x^2$ is 60. Find the possible values of $a$.', hint:'Use the binomial term $\\binom{6}{2}(1)^4(ax)^2$.', solution:'$15a^2 x^2 = 60x^2 \\Rightarrow 15a^2 = 60 \\Rightarrow a^2 = 4 \\Rightarrow a = \\pm 2$' },
+  { id:'q58', topic:'diff', diff:'medium', text:'Differentiate $y = (3x^2 + 1)^4$ using the chain rule.', hint:'Let $u = 3x^2+1$. Find $dy/du \\cdot du/dx$.', solution:'$\\frac{dy}{dx} = 4(3x^2+1)^3 \\cdot (6x) = 24x(3x^2+1)^3$' },
+  { id:'q59', topic:'diff', diff:'hard', text:'A curve has the equation $y = x + \\frac{1}{x}$. Find the coordinates of the stationary points.', hint:'Set $dy/dx = 0$ and solve for $x$.', solution:'$y = x + x^{-1} \\Rightarrow \\frac{dy}{dx} = 1 - x^{-2} = 1 - \\frac{1}{x^2}$\n$1 - \\frac{1}{x^2} = 0 \\Rightarrow x^2 = 1 \\Rightarrow x = \\pm 1$\nPoints: $(1, 2)$ and $(-1, -2)$' },
+  { id:'q60', topic:'integ', diff:'medium', text:'Find $\\int_1^4 \\frac{1}{\\sqrt{x}} \\, dx$.', hint:'Write $1/\\sqrt{x}$ as $x^{-1/2}$.', solution:'$\\int_1^4 x^{-1/2} \\, dx = [2x^{1/2}]_1^4 = 2(2) - 2(1) = 2$' },
+  { id:'q61', topic:'integ', diff:'hard', text:'Find the area of the region bounded by $y = x^2$ and $y = 8 - x^2$.', hint:'Find intersection points first.', solution:'$x^2 = 8 - x^2 \\Rightarrow 2x^2 = 8 \\Rightarrow x = \\pm 2$\n$A = \\int_{-2}^2 (8 - 2x^2) \\, dx = [8x - \\frac{2x^3}{3}]_{-2}^2$\n$= (16 - 16/3) - (-16 + 16/3) = 32 - 32/3 = 64/3 \\approx 21.33$' },
+  { id:'q62', topic:'quadratics', diff:'medium', text:'Determine if the line $y = 2x - 5$ is a tangent to the circle $x^2 + y^2 = 5$.', hint:'Substitute line into circle and check if $\\Delta = 0$.', solution:'$x^2 + (2x-5)^2 = 5 \\Rightarrow x^2 + 4x^2 - 20x + 25 = 5 \\Rightarrow 5x^2 - 20x + 20 = 0 \\Rightarrow x^2 - 4x + 4 = 0$\n$\\Delta = (-4)^2 - 4(1)(4) = 16 - 16 = 0$\nSince $\\Delta = 0$, it is a tangent.' },
+  { id:'q63', topic:'functions', diff:'medium', text:'If $f(x) = \\frac{x+1}{x-1}$, show that $f(f(x)) = x$.', hint:'Substitute $f(x)$ into itself.', solution:'$f(f(x)) = \\frac{\\frac{x+1}{x-1} + 1}{\\frac{x+1}{x-1} - 1} = \\frac{x+1 + x-1}{x+1 - (x-1)} = \\frac{2x}{2} = x$' },
+  { id:'q64', topic:'series', diff:'medium', text:'The sum to infinity of a GP is 10 and the common ratio is 0.4. Find the first term.', hint:'Use $S_\\infty = a/(1-r)$.', solution:'$10 = a/(1-0.4) \\Rightarrow 10 = a/0.6 \\Rightarrow a = 6$' },
+  { id:'q65', topic:'diff', diff:'hard', text:'Find the value of $x$ for which the gradient of $y = x^3 - 6x^2 + 9x$ is equal to 0.', hint:'Differentiate and solve the quadratic.', solution:'$y\' = 3x^2 - 12x + 9 = 0 \\Rightarrow x^2 - 4x + 3 = 0 \\Rightarrow (x-1)(x-3) = 0$\n$x = 1$ or $x = 3$' },
+  { id:'q66', topic:'integ', diff:'hard', text:'Evaluate $\\int_0^1 (2x+1)^3 \\, dx$.', hint:'Use the integration formula for $(ax+b)^n$.', solution:'$= [\\frac{(2x+1)^4}{4 \\times 2}]_0^1 = [\\frac{(2x+1)^4}{8}]_0^1 = \\frac{3^4}{8} - \\frac{1^4}{8} = \\frac{81-1}{8} = 10$' },
+];
+
+// State
+let completed = JSON.parse(localStorage.getItem('p1ace_qcomplete') || '{}');
+
+function renderQuestions() {
+  const container = document.getElementById('questionsContainer');
+  const topics = ['quadratics','functions','coord','circular','trig','series','diff','integ'];
+  const topicNames = { quadratics:'Quadratics', functions:'Functions', coord:'Coordinate Geometry', circular:'Circular Measure', trig:'Trigonometry', series:'Series', diff:'Differentiation', integ:'Integration' };
+  const diffLabel = { easy:'Foundation', medium:'Standard', hard:'Challenge' };
+  const diffClass = { easy:'badge--easy', medium:'badge--medium', hard:'badge--hard' };
+
+  let html = '';
+  topics.forEach(t => {
+    const qs = QUESTIONS.filter(q => q.topic === t);
+    html += `<div class="q-section" data-topic="${t}">
+      <h2>${topicNames[t]}</h2>
+      ${qs.map((q,i) => `
+        <div class="question" id="${q.id}">
+          <div class="question__head">
+            <span class="question__id">Q${QUESTIONS.indexOf(q)+1}</span>
+            <div style="display:flex;gap:8px;align-items:center;">
+              <span class="badge ${diffClass[q.diff]}">${diffLabel[q.diff]}</span>
+              <button class="done-btn ${completed[q.id]?'completed':''}" onclick="toggleDone('${q.id}',this)">${completed[q.id]?'✓ Done':'Mark Done'}</button>
+            </div>
+          </div>
+          <div class="question__text">${q.text}</div>
+          <div class="question__btns">
+            <button class="btn btn--ghost btn--sm" onclick="toggleHint('${q.id}')">Show Hint</button>
+            <button class="btn btn--primary btn--sm" onclick="toggleSolution('${q.id}')">Show Solution</button>
+          </div>
+          <div class="question__hint" id="hint-${q.id}">${q.hint}</div>
+          <div class="question__solution" id="sol-${q.id}"><div class="solution-step">${q.solution.replace(/\n/g,'<br>')}</div></div>
+        </div>
+      `).join('')}
+    </div>`;
+  });
+  container.innerHTML = html;
+  updateStats();
+
+  // Re-render KaTeX
+  setTimeout(() => {
+    if (typeof renderMathInElement === 'function') {
+      renderMathInElement(container, {
+        delimiters: [
+          {left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false},
+          {left:'\\(',right:'\\)',display:false},{left:'\\[',right:'\\]',display:true}
+        ], throwOnError:false
+      });
+    }
+  }, 200);
+}
+
+window.toggleHint = function(id) {
+  const el = document.getElementById('hint-'+id);
+  el.classList.toggle('show');
+};
+
+window.toggleSolution = function(id) {
+  const el = document.getElementById('sol-'+id);
+  el.classList.toggle('show');
+};
+
+window.toggleDone = function(id, btn) {
+  completed[id] = !completed[id];
+  localStorage.setItem('p1ace_qcomplete', JSON.stringify(completed));
+  btn.classList.toggle('completed', completed[id]);
+  btn.textContent = completed[id] ? '✓ Done' : 'Mark Done';
+  updateStats();
+};
+
+window.filterQ = function(topic, btn) {
+  document.querySelectorAll('.q-filter .tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.q-section').forEach(s => {
+    s.style.display = (topic === 'all' || s.dataset.topic === topic) ? '' : 'none';
+  });
+};
+
+window.randomQuestion = function() {
+  const undone = QUESTIONS.filter(q => !completed[q.id]);
+  if (undone.length === 0) { alert('All questions completed! 🎉'); return; }
+  const q = undone[Math.floor(Math.random() * undone.length)];
+  // Show all sections, scroll to question
+  document.querySelectorAll('.q-section').forEach(s => s.style.display = '');
+  document.querySelectorAll('.q-filter .tab').forEach(t => t.classList.toggle('active', t.textContent === 'All Topics'));
+  document.getElementById(q.id).scrollIntoView({ behavior:'smooth', block:'center' });
+  document.getElementById(q.id).style.borderColor = 'var(--accent-blue)';
+  setTimeout(() => { document.getElementById(q.id).style.borderColor = ''; }, 2000);
+};
+
+function updateStats() {
+  const total = QUESTIONS.length;
+  const done = Object.values(completed).filter(Boolean).length;
+  document.getElementById('statDone').textContent = done;
+  document.getElementById('statTotal').textContent = total;
+
+  // Topic progress
+  const topics = ['quadratics','functions','coord','circular','trig','series','diff','integ'];
+  const topicNames = { quadratics:'Quadratics', functions:'Functions', coord:'Coord Geom', circular:'Circular', trig:'Trig', series:'Series', diff:'Differentiation', integ:'Integration' };
+  const grid = document.getElementById('topicProgress');
+  grid.innerHTML = topics.map(t => {
+    const qs = QUESTIONS.filter(q => q.topic === t);
+    const doneCount = qs.filter(q => completed[q.id]).length;
+    const pct = qs.length > 0 ? Math.round(doneCount/qs.length*100) : 0;
+    return `<div class="tp-card">
+      <div class="tp-card__name">${topicNames[t]}</div>
+      <div class="tp-card__bar"><div class="tp-card__fill" style="width:${pct}%"></div></div>
+      <div class="tp-card__count">${doneCount}/${qs.length} completed</div>
+    </div>`;
+  }).join('');
+}
+
+document.addEventListener('DOMContentLoaded', renderQuestions);
+</script>
+</body>
+</html>
